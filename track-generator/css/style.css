@@ -1,0 +1,10 @@
+/* Track Generator basic styles */
+.tg-container {
+    padding: 1em;
+    border: 1px solid #ccc;
+    max-width: 400px;
+}
+.tg-container label {
+    display: block;
+    margin: 0.5em 0 0.2em;
+}

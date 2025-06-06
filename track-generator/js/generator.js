@@ -254,7 +254,10 @@
             result += '<section class="tg-prog-result">';
             result += '<h4>' + progNames[p] + '</h4>';
             result += '<p class="tg-degrees"><strong>Degrees:</strong> ' + progDegrees.join(' - ') + '</p>';
-            result += '<p class="tg-chords"><em>Chords:</em> ' + chords.join(' - ') + '</p>';
+            var chordLinks = chords.map(function(c){
+                return '<a href="#" class="tg-chord-link" data-chord="' + c + '">' + c + '</a>';
+            });
+            result += '<p class="tg-chords"><em>Chords:</em> ' + chordLinks.join(' - ') + '</p>';
             result += '<div class="tg-slots-group"></div>';
             result += '</section>';
             allChords.push(chords);
@@ -289,6 +292,14 @@
         }
     });
 
+    $(document).on('click', '.tg-chord-link', function(e){
+        e.preventDefault();
+        var chord = $(this).data('chord');
+        if (chord) {
+            showChordPopup(chord);
+        }
+    });
+
     function showToast(msg) {
         var $toast = $('#tg-toast');
         if (!$toast.length) {
@@ -299,5 +310,23 @@
         $toast.data('timer', setTimeout(function(){
             $toast.css('opacity', 0);
         }, 1000));
+    }
+
+    function showChordPopup(chord) {
+        var $overlay = $('<div class="tg-chord-overlay"></div>');
+        var $popup = $('<div class="tg-chord-popup"></div>');
+        var $close = $('<button type="button" class="tg-chord-close">&times;</button>');
+        var $content = $('<div data-chord="' + chord + '" data-instrument="guitar" data-output="image"></div>');
+        $popup.append($close).append($content);
+        $('body').append($overlay).append($popup);
+        $close.on('click', remove);
+        $overlay.on('click', remove);
+        if (window.renderScalesChords) {
+            window.renderScalesChords();
+        }
+        function remove() {
+            $overlay.remove();
+            $popup.remove();
+        }
     }
 })(jQuery);

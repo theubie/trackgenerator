@@ -149,4 +149,37 @@
     pointer-events: none;
 }
 
+.tg-chord-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}
+
+.tg-chord-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    z-index: 1000;
+    max-width: 90%;
+}
+
+.tg-chord-close {
+    position: absolute;
+    top: 0.25em;
+    right: 0.25em;
+    background: transparent;
+    border: none;
+    font-size: 1.25em;
+    cursor: pointer;
+}
+
 

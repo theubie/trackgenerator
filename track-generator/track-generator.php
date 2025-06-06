@@ -24,6 +24,13 @@ function tg_enqueue_assets() {
         null,
         true
     );
+    wp_enqueue_script(
+        'scales-chords-api',
+        'https://www.scales-chords.com/api/scales-chords-api.js',
+        array(),
+        null,
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'tg_enqueue_assets');
 

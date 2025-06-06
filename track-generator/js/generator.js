@@ -62,6 +62,11 @@
         },
 
         renderChord: function(note, quality, modifiers) {
+            // If a power chord is requested, return note + '5'
+            if (modifiers && modifiers.indexOf('power') !== -1) {
+                return note + '5';
+            }
+
             var name = note;
             if(quality === 'min') { name += 'm'; }
             if(quality === 'dim') { name += 'dim'; }

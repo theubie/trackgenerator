@@ -12,9 +12,9 @@ A WordPress plugin that generates random ideas for new music tracks. It provides
 
 ## Installation
 
-1. Copy the `track-generator` directory into your WordPress `wp-content/plugins` folder.
-2. Activate **Track Generator** from the Plugins page of your WordPress admin panel.
-3. Insert the `[track_generator]` shortcode on any page or post to display the generator.
+1. Download the latest release zip from the **Releases** page.
+2. In your WordPress dashboard go to **Plugins → Add New → Upload Plugin** and select the downloaded zip file.
+3. Activate **Track Generator** after upload and insert the `[track_generator]` shortcode on any page or post to display the generator.
 
 ## Development
 

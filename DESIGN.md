@@ -92,8 +92,7 @@ and controls.
    optional tritone substitutions for more complex progressions.
 9. **LocalStorage** – Persist advanced settings like BPM range, enabled modes
    and progression type.
-10. **Improved Display** – Show Roman numerals alongside chord names and provide
-    a copy-to-clipboard button.
+10. **Improved Display** – Show Roman numerals alongside chord names.
 11. **Animated Generation** – Add a small animation when generating results,
     such as a slot-machine style spinner or rotating wheels, to make the UI feel
     livelier.

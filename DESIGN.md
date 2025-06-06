@@ -65,11 +65,33 @@ Generated Track Idea:
 2. Activate the plugin in your WordPress dashboard.
 3. Add `[track_generator]` shortcode to any page or post.
 
-## Future Enhancements
+## Advanced Feature Roadmap
 
-- More modes (Dorian, Mixolydian, etc.)
-- Display actual chords instead of numbers
-- Support 7th/9th/aug/dim variations
-- Ability to save or copy results
-- Dark mode toggle
-- OBS overlay-friendly output
+The following items outline the next phase of development. All advanced options
+are gated behind an **Advanced Mode** toggle so the basic workflow remains
+lightweight. When enabled, Advanced Mode will expose additional chord details
+and controls.
+
+1. **Advanced Mode Toggle** – Checkbox to reveal extra options such as chord
+   modifiers and functional substitutions.
+2. **Chord Modifier Options** – Select between 7th chords, suspended chords
+   (`sus2`/`sus4`), diminished, augmented and power chords.
+3. **Mode-to-Scale Table** – JavaScript object mapping each mode to its scale
+   formula.
+4. **Diatonic Scale Generation** – Build the scale for the chosen key and mode
+   (e.g. `C` + `Dorian` → `C D Eb F G A Bb`).
+5. **Degree-to-Chord Mapping** – Determine chord quality per scale degree based
+   on the current mode.
+6. **Chord Rendering Engine** – Convert key, degree and modifiers into a proper
+   chord name such as `Gsus4` or `Cmaj7`.
+7. **Random Modifiers** – Optionally assign a random modifier to each chord in a
+   progression.
+8. **Functional Flavor Options** – Borrowed chords from parallel modes and
+   optional tritone substitutions for more complex progressions.
+9. **LocalStorage** – Persist advanced settings like BPM range, enabled modes
+   and progression type.
+10. **Improved Display** – Show Roman numerals alongside chord names and provide
+    a copy-to-clipboard button.
+11. **Animated Generation** – Add a small animation when generating results,
+    such as a slot-machine style spinner or rotating wheels, to make the UI feel
+    livelier.

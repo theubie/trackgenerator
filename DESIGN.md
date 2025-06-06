@@ -10,8 +10,8 @@ This lightweight plugin adds a track idea generator to any WordPress site. It pr
    - Users select a minimum and maximum BPM (default 60–160).
    - The app outputs a random BPM in that range.
 2. **Key + Mode Selector**
-   - Checkboxes allow the user to enable any of the seven modes (Ionian/Major, Dorian, Phrygian, Lydian, Mixolydian, Aeolian/Natural Minor, Locrian).
-   - A key from A–G# is randomly chosen along with one of the selected modes.
+   - Each mode (Ionian/Major, Dorian, Phrygian, Lydian, Mixolydian, Aeolian/Natural Minor and Locrian) uses a drop‑down with weighted options from **None** to **Always**.
+   - A key from A–G# is randomly chosen along with one of the modes, taking the assigned weights into account.
 3. **Chord Progression Generator**
    - *Tried and True*: chooses from a curated list of common progressions such as `1 - 4 - 5`.
    - *True Random*: user specifies a length (e.g. 3–8 chords) and the app generates random degrees `1–7`.
@@ -22,9 +22,9 @@ This lightweight plugin adds a track idea generator to any WordPress site. It pr
 | --- | --- | --- |
 | BPM Min | `<input type="number">` | Default: 60 |
 | BPM Max | `<input type="number">` | Default: 160 |
-| Mode Select | `<input type="checkbox">` | Each mode has its own checkbox |
+| Mode Weights | `<select>` | Set probability for each mode |
 | Progression Type | `<input type="radio">` | "Tried and True" or "True Random" |
-| Progression Length | `<input type="number">` | Visible only for "True Random" |
+| Progression Length | `<input type="number">` | Always visible; used for "True Random" |
 | Generate Button | `<button>` | Runs the generator |
 | Output Display | `<div>` | Area where results appear |
 

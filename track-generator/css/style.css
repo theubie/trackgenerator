@@ -182,4 +182,19 @@
     cursor: pointer;
 }
 
+.tg-chord-wrap {
+    display: inline-block;
+    margin-right: 0.25em;
+}
+
+.tg-copy-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.tg-roman {
+    color: #555;
+}
+
 

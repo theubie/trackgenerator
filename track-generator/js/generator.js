@@ -70,7 +70,8 @@
             var name = note;
             if(quality === 'min') { name += 'm'; }
             if(quality === 'dim') { name += 'dim'; }
-            if(quality === 'maj') { name += 'maj'; }
+            // Omit explicit 'maj' for major chords
+            // This keeps plain majors like 'E' instead of 'Emaj'
             if(modifiers && modifiers.length) {
                 name += modifiers.join('');
             }

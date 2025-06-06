@@ -97,6 +97,26 @@
         }
     };
 
+    function spinSlot($slot, chord, delay) {
+        var pool = ['A','Am','B','Bm','C','Cm','D','Dm','E','Em','F','Fm','G','Gm'];
+        var $reel = $slot.find('.slot-reel');
+        $reel.empty();
+        var items = [];
+        for (var i = 0; i < 10; i++) {
+            items.push(pool[randomInt(0, pool.length - 1)]);
+        }
+        items.push(chord);
+        for (var j = 0; j < items.length; j++) {
+            $reel.append('<div class="slot-item">' + items[j] + '</div>');
+        }
+        var itemHeight = $reel.find('.slot-item').outerHeight(true);
+        var finalTop = -itemHeight * (items.length - 1);
+        $reel.css('marginTop', 0);
+        setTimeout(function(){
+            $reel.animate({ marginTop: finalTop }, 500);
+        }, delay || 0);
+    }
+
     $(function() {
         var stored = window.localStorage ? localStorage.getItem('tg-options') : null;
         if (stored) {
@@ -174,11 +194,22 @@
         result += '<p><strong>BPM:</strong> ' + tg.generateBPM(bpmMin, bpmMax) + '</p>';
         result += '<p><strong>Key:</strong> ' + keyObj.text + '</p>';
         result += '<p><strong>Progression:</strong> ' + progDegrees.join(' - ') + '</p>';
+        var chords = [];
         if (advEnabled) {
-            var chords = tg.renderProgression(progDegrees, keyObj, modifiers);
+            chords = tg.renderProgression(progDegrees, keyObj, modifiers);
             result += '<p><strong>Chords:</strong> ' + chords.join(' - ') + '</p>';
         }
 
         $('#tg-output').html(result);
+
+        var $slots = $('#tg-slots');
+        $slots.empty();
+        if (chords.length) {
+            for (var i = 0; i < chords.length; i++) {
+                var $slot = $('<div class="slot"><div class="slot-reel"></div></div>');
+                $slots.append($slot);
+                spinSlot($slot, chords[i], i * 150);
+            }
+        }
     });
 })(jQuery);

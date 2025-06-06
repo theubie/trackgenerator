@@ -21,4 +21,4 @@ The plugin uses vanilla JavaScript and minimal styling. See [DESIGN.md](DESIGN.m
 
 ### Advanced Mode
 
-Check the **Advanced Mode** box to reveal additional options for chord modifiers. When enabled, a single random modifier (or none) is applied to each chord and the resulting progression includes rendered chord names.
+Check the **Advanced Mode** box to reveal weighted chord variations. Each variation (7th, sus2, etc.) can be given a probability and an **Unmodified** weight controls how often no change is applied. If Unmodified is set to **Always**, other variation weights are ignored.

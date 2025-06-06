@@ -135,8 +135,14 @@
             var chords = [];
             var modOptions = [];
             if (modWeights) {
-                for (var m in modWeights) {
-                    modOptions.push({ value: m, weight: modWeights[m] });
+                var unmod = modWeights['unmodified'] || 0;
+                var unmodAlways = unmod === weightLevels[6];
+                modOptions.push({ value: null, weight: unmod });
+                if (!unmodAlways) {
+                    for (var m in modWeights) {
+                        if (m === 'unmodified') { continue; }
+                        modOptions.push({ value: m, weight: modWeights[m] });
+                    }
                 }
             }
             for(var i=0;i<degrees.length;i++) {

@@ -269,5 +269,17 @@
 
     </div> <!-- end tg-settings -->
 
+    <div class="tg-about">
+        <h3>About This App</h3>
+        <p>
+            Track Generator is brought to you by
+            <a href="https://www.youtube.com/@theubie">TheUbie</a>.
+            Found a bug or have a feature request?
+            <a href="https://github.com/theubie/trackgenerator/issues">Let me know on GitHub</a>.
+            Enjoying it? <a href="https://streamelements.com/theubie-fc49c/tip">leave a tip</a>
+            if you like.
+        </p>
+    </div>
+
 </div>
 

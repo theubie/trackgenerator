@@ -24,3 +24,11 @@ The plugin uses jQuery, Bootstrap, and minimal styling. See [DESIGN.md](DESIGN.m
 ### Advanced Mode
 
 Check the **Advanced Mode** box to reveal weighted chord variations. Each variation (7th, sus2, etc.) can be given a probability and an **Unmodified** weight controls how often no change is applied. If Unmodified is set to **Always**, other variation weights are ignored.
+
+## Community and Support
+
+Track Generator is brought to you by [TheUbie](https://www.youtube.com/@theubie).
+If you encounter issues or have feature requests, please open an issue on
+[GitHub](https://github.com/theubie/trackgenerator/issues).
+Generously given to you for free! If you want to be generous back,
+[click here](https://streamelements.com/theubie-fc49c/tip) to leave a tip.

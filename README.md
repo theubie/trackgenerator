@@ -18,7 +18,7 @@ A WordPress plugin that generates random ideas for new music tracks. It provides
 
 ## Development
 
-The plugin uses vanilla JavaScript and minimal styling. See [DESIGN.md](DESIGN.md) for the project design and planned enhancements.
+The plugin uses jQuery, Bootstrap, and minimal styling. See [DESIGN.md](DESIGN.md) for the project design and planned enhancements.
 
 ### Advanced Mode
 

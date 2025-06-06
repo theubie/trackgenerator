@@ -75,7 +75,9 @@ and controls.
 1. **Advanced Mode Toggle** – Checkbox to reveal extra options such as chord
    modifiers and functional substitutions.
 2. **Chord Modifier Options** – Select between 7th chords, suspended chords
-   (`sus2`/`sus4`), diminished, augmented and power chords.
+   (`sus2`/`sus4`), diminished, augmented and power chords. When the power
+   modifier is applied the resulting chord is displayed with a `5` suffix
+   (e.g. `E5`).
 3. **Mode-to-Scale Table** – JavaScript object mapping each mode to its scale
    formula.
 4. **Diatonic Scale Generation** – Build the scale for the chosen key and mode

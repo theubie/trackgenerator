@@ -78,7 +78,14 @@
             var chords = [];
             for(var i=0;i<degrees.length;i++) {
                 var deg = degrees[i]-1;
-                var chord = this.renderChord(scale[deg], qualities[deg], modifiers);
+                var mods = [];
+                if (modifiers && modifiers.length) {
+                    var idx = randomInt(-1, modifiers.length - 1);
+                    if (idx !== -1) {
+                        mods.push(modifiers[idx]);
+                    }
+                }
+                var chord = this.renderChord(scale[deg], qualities[deg], mods);
                 chords.push(chord);
             }
             return chords;

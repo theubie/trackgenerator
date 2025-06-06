@@ -13,6 +13,8 @@
         6: 6  // always
     };
 
+    var romanNums = ['I','II','III','IV','V','VI','VII'];
+
     function weightedRandom(options) {
         var total = 0;
         for (var i = 0; i < options.length; i++) {
@@ -109,6 +111,13 @@
             return name;
         },
 
+        romanNumeral: function(degree, quality) {
+            var n = romanNums[degree - 1] || '';
+            if (quality === 'min') { n = n.toLowerCase(); }
+            if (quality === 'dim') { n = n.toLowerCase() + '\u00B0'; }
+            return n;
+        },
+
         songElements: [
             'Key Change',
             'Tempo Shift',
@@ -129,7 +138,7 @@
             return results;
         },
 
-        renderProgression: function(degrees, keyObj, modWeights) {
+        renderProgression: function(degrees, keyObj, modWeights, flavorWeights) {
             var scale = this.buildScale(keyObj.key, keyObj.mode);
             var qualities = this.degreeQualities[keyObj.mode] || this.degreeQualities['Major'];
             var chords = [];
@@ -145,13 +154,30 @@
                     }
                 }
             }
+            var borrowProb = flavorWeights ? (flavorWeights['borrowed'] || 0) / weightLevels[6] : 0;
+            var tritoneProb = flavorWeights ? (flavorWeights['tritone'] || 0) / weightLevels[6] : 0;
+            var parallel = (keyObj.mode === 'Natural Minor') ? 'Major' : 'Natural Minor';
+            var parScale = this.buildScale(keyObj.key, parallel);
+            var parQual = this.degreeQualities[parallel] || qualities;
+            var notesArray = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
             for(var i=0;i<degrees.length;i++) {
                 var deg = degrees[i]-1;
                 var mods = [];
                 var chosen = weightedRandom(modOptions);
                 if (chosen) { mods.push(chosen); }
-                var chord = this.renderChord(scale[deg], qualities[deg], mods);
-                chords.push(chord);
+                var note = scale[deg];
+                var qual = qualities[deg];
+                if (Math.random() < borrowProb) {
+                    note = parScale[deg];
+                    qual = parQual[deg];
+                }
+                if (Math.random() < tritoneProb) {
+                    var idx = notesArray.indexOf(note);
+                    note = notesArray[(idx + 6) % 12];
+                }
+                var chord = this.renderChord(note, qual, mods);
+                var roman = this.romanNumeral(degrees[i], qual);
+                chords.push({ chord: chord, roman: roman });
             }
             return chords;
         }
@@ -177,16 +203,49 @@
         }, delay || 0);
     }
 
-    function addProgRow(name) {
+function addProgRow(name) {
         var $row = $('<div class="tg-prog-row">' +
             '<input type="text" class="tg-prog-name" placeholder="Progression name">' +
             '<button type="button" class="tg-remove-prog">Remove</button>' +
             '</div>');
         if (name) { $row.find('input').val(name); }
         $('#tg-prog-list').append($row);
+}
+
+    function loadSettings() {
+        try {
+            var s = JSON.parse(localStorage.getItem('tgSettings'));
+        } catch(e) { return; }
+        if (!s) { return; }
+        if (s.bpmMin) { $('#tg-bpm-min').val(s.bpmMin); }
+        if (s.bpmMax) { $('#tg-bpm-max').val(s.bpmMax); }
+        if (s.modeWeights) {
+            $('select[data-mode]').each(function(){
+                var m = $(this).data('mode');
+                if (s.modeWeights[m] !== undefined) { $(this).val(s.modeWeights[m]); }
+            });
+        }
+        if (s.progType) {
+            $('input[name="tg-prog-type"][value="' + s.progType + '"]').prop('checked', true);
+        }
+        if (s.progLength) { $('#tg-prog-length').val(s.progLength); }
+        if (s.advEnabled) { $('#tg-adv-toggle').prop('checked', true).trigger('change'); }
+        if (s.modWeights) {
+            $('select[data-mod]').each(function(){
+                var k = $(this).data('mod');
+                if (s.modWeights[k] !== undefined) { $(this).val(s.modWeights[k]); }
+            });
+        }
+        if (s.flavorWeights) {
+            $('select[data-flavor]').each(function(){
+                var k = $(this).data('flavor');
+                if (s.flavorWeights[k] !== undefined) { $(this).val(s.flavorWeights[k]); }
+            });
+        }
     }
 
     $(function() {
+        loadSettings();
         $('#tg-adv-toggle').on('change', function(){
             $('#tg-advanced').toggle(this.checked);
         }).trigger('change');
@@ -232,6 +291,10 @@
         $('select[data-mod]').each(function(){
             modWeights[$(this).data('mod')] = parseInt($(this).val(), 10);
         });
+        var flavorWeights = {};
+        $('select[data-flavor]').each(function(){
+            flavorWeights[$(this).data('flavor')] = parseInt($(this).val(), 10);
+        });
         var progNames = [];
         $('#tg-prog-list .tg-prog-row').each(function(idx){
             var name = $(this).find('.tg-prog-name').val().trim();
@@ -244,20 +307,34 @@
             songWeights[$(this).data('song')] = parseInt($(this).val(), 10);
         });
 
+        var settings = {
+            bpmMin: bpmMin,
+            bpmMax: bpmMax,
+            modeWeights: modeWeights,
+            progType: progType,
+            progLength: progLength,
+            advEnabled: advEnabled,
+            modWeights: modWeights,
+            flavorWeights: flavorWeights
+        };
+        try {
+            localStorage.setItem('tgSettings', JSON.stringify(settings));
+        } catch(e) {}
+
         var bpm = tg.generateBPM(bpmMin, bpmMax);
         var keyObj = tg.generateKey(modeWeights);
         var result = '<div id="tg-output-summary"><strong>' + keyObj.text + '</strong> - ' + bpm + ' BPM</div>';
         var allChords = [];
         for (var p = 0; p < progNames.length; p++) {
             var progDegrees = tg.generateProgression(progType, progLength);
-            var chords = tg.renderProgression(progDegrees, keyObj, advEnabled ? modWeights : null);
+            var chords = tg.renderProgression(progDegrees, keyObj, advEnabled ? modWeights : null, advEnabled ? flavorWeights : null);
             result += '<section class="tg-prog-result">';
             result += '<h4>' + progNames[p] + '</h4>';
             result += '<p class="tg-degrees"><strong>Degrees:</strong> ' + progDegrees.join(' - ') + '</p>';
             var chordLinks = chords.map(function(c){
-                return '<a href="#" class="tg-chord-link" data-chord="' + c + '">' + c + '</a>';
+                return '<span class="tg-chord-wrap"><a href="#" class="tg-chord-link" data-chord="' + c.chord + '">' + c.chord + '</a> <span class="tg-roman">(' + c.roman + ')</span> <button type="button" class="tg-copy-btn" data-chord="' + c.chord + '">&#128203;</button></span>';
             });
-            result += '<p class="tg-chords"><em>Chords:</em> ' + chordLinks.join(' - ') + '</p>';
+            result += '<p class="tg-chords"><em>Chords:</em> ' + chordLinks.join(' ') + '</p>';
             result += '<div class="tg-slots-group"></div>';
             result += '</section>';
             allChords.push(chords);
@@ -276,14 +353,24 @@
             var chords = allChords[p];
             var $group = $(this).find('.tg-slots-group');
             for (var i = 0; i < chords.length; i++) {
-                var $slot = $('<div class="slot" title="Click to copy" data-chord="' + chords[i] + '"><div class="slot-reel"></div></div>');
+                var ch = chords[i].chord;
+                var $slot = $('<div class="slot" title="Click to copy" data-chord="' + ch + '"><div class="slot-reel"></div></div>');
                 $group.append($slot);
-                spinSlot($slot, chords[i], p * 500 + i * 150);
+                spinSlot($slot, ch, p * 500 + i * 150);
             }
         });
     });
 
     $(document).on('click', '.slot', function(){
+        var chord = $(this).data('chord');
+        if (chord && navigator.clipboard) {
+            navigator.clipboard.writeText(chord).then(function(){
+                showToast('Copied!');
+            });
+        }
+    });
+
+    $(document).on('click', '.tg-copy-btn', function(){
         var chord = $(this).data('chord');
         if (chord && navigator.clipboard) {
             navigator.clipboard.writeText(chord).then(function(){

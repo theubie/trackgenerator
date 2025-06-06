@@ -91,6 +91,31 @@
                                     </select>
             </label>
         </fieldset>
+        <fieldset>
+            <legend>Functional Flavor</legend>
+            <label>Borrowed
+                <select name="tg-flavor-borrowed" data-flavor="borrowed">
+                    <option value="0">None</option>
+                    <option value="1">Very Rare</option>
+                    <option value="2">Rare</option>
+                    <option value="3">Uncommon</option>
+                    <option value="4">Common</option>
+                    <option value="5">Abundant</option>
+                    <option value="6">Always</option>
+                </select>
+            </label>
+            <label>Tritone Sub
+                <select name="tg-flavor-tritone" data-flavor="tritone">
+                    <option value="0">None</option>
+                    <option value="1">Very Rare</option>
+                    <option value="2">Rare</option>
+                    <option value="3">Uncommon</option>
+                    <option value="4">Common</option>
+                    <option value="5">Abundant</option>
+                    <option value="6">Always</option>
+                </select>
+            </label>
+        </fieldset>
     </div>
 
     <fieldset>

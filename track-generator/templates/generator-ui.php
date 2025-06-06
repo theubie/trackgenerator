@@ -5,6 +5,20 @@
     <label for="tg-bpm-max">BPM Max</label>
     <input id="tg-bpm-max" type="number" value="160">
 
+    <label><input type="checkbox" id="tg-adv-toggle"> Advanced Mode</label>
+
+    <div id="tg-advanced" class="tg-advanced-options">
+        <fieldset>
+            <legend>Chord Modifiers</legend>
+            <label><input type="checkbox" name="tg-modifiers[]" value="7"> 7th</label>
+            <label><input type="checkbox" name="tg-modifiers[]" value="sus2"> sus2</label>
+            <label><input type="checkbox" name="tg-modifiers[]" value="sus4"> sus4</label>
+            <label><input type="checkbox" name="tg-modifiers[]" value="dim"> diminished</label>
+            <label><input type="checkbox" name="tg-modifiers[]" value="aug"> augmented</label>
+            <label><input type="checkbox" name="tg-modifiers[]" value="power"> power</label>
+        </fieldset>
+    </div>
+
     <fieldset>
         <legend>Modes</legend>
         <label><input type="checkbox" name="tg-modes[]" value="Major" checked> Major</label>

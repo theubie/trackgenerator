@@ -17,8 +17,10 @@
 }
 
 /* Animated slot styling */
-.tg-slots {
-    margin-top: 1em;
+
+/* Container for slot groups inside results */
+.tg-slots-group {
+    margin-top: 0.5em;
 }
 
 .slot {
@@ -65,6 +67,40 @@
     margin-bottom: 1em;
 }
 
-.tg-slot-wrap {
+/* Basic layout tweaks */
+.tg-container fieldset {
     margin-bottom: 1em;
+    padding: 0.5em;
+    border: 1px solid #ccc;
 }
+
+.tg-container legend {
+    font-weight: bold;
+}
+
+/* Modern form elements */
+.tg-container input[type="number"],
+.tg-container input[type="text"],
+.tg-container select {
+    padding: 0.25em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tg-container button {
+    padding: 0.5em 1em;
+    border: none;
+    background: #0073aa;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 0.5em;
+}
+
+.tg-container button:hover {
+    background: #006799;
+}
+
+

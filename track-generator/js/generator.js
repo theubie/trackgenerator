@@ -239,14 +239,12 @@
         var allChords = [];
         for (var p = 0; p < progNames.length; p++) {
             var progDegrees = tg.generateProgression(progType, progLength);
+            var chords = tg.renderProgression(progDegrees, keyObj, advEnabled ? modWeights : null);
             result += '<section class="tg-prog-result">';
             result += '<h4>' + progNames[p] + '</h4>';
             result += '<p><strong>Degrees:</strong> ' + progDegrees.join(' - ') + '</p>';
-            var chords = [];
-            if (advEnabled) {
-                chords = tg.renderProgression(progDegrees, keyObj, modWeights);
-                result += '<p><em>Chords:</em> ' + chords.join(' - ') + '</p>';
-            }
+            result += '<p><em>Chords:</em> ' + chords.join(' - ') + '</p>';
+            result += '<div class="tg-slots-group"></div>';
             result += '</section>';
             allChords.push(chords);
         }
@@ -260,21 +258,14 @@
 
         $('#tg-output').html(result);
 
-        var $slots = $('#tg-slots');
-        $slots.empty();
-        for (var p = 0; p < allChords.length; p++) {
+        $('#tg-output .tg-prog-result').each(function(p){
             var chords = allChords[p];
-            if (!chords.length) { continue; }
-            var $wrap = $('<div class="tg-slot-wrap"></div>');
-            $wrap.append('<h4>' + progNames[p] + '</h4>');
-            var $group = $('<div class="tg-slots-group"></div>');
+            var $group = $(this).find('.tg-slots-group');
             for (var i = 0; i < chords.length; i++) {
                 var $slot = $('<div class="slot"><div class="slot-reel"></div></div>');
                 $group.append($slot);
-                spinSlot($slot, chords[i], i * 150);
+                spinSlot($slot, chords[i], p * 500 + i * 150);
             }
-            $wrap.append($group);
-            $slots.append($wrap);
-        }
+        });
     });
 })(jQuery);

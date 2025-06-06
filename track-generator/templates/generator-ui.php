@@ -15,9 +15,9 @@
 
     <div id="tg-advanced" class="tg-advanced-options">
         <fieldset>
-            <legend>Chord Modifiers</legend>
-            <label>7th
-                <select name="tg-mod-7" data-mod="7">
+            <legend>Chord Variation</legend>
+            <label>Unmodified
+                <select name="tg-mod-unmodified" data-mod="unmodified">
                     <option value="0">None</option>
                     <option value="1">Very Rare</option>
                     <option value="2">Rare</option>
@@ -26,6 +26,16 @@
                     <option value="5">Abundant</option>
                     <option value="6">Always</option>
                 </select>
+            </label>
+            <label>7th
+                <select name="tg-mod-7" data-mod="7">
+                    <option value="0">None</option>
+                    <option value="1">Very Rare</option>
+                    <option value="2">Rare</option>
+                    <option value="3">Uncommon</option>
+                    <option value="4">Common</option>
+                    <option value="5">Abundant</option>
+                                    </select>
             </label>
             <label>sus2
                 <select name="tg-mod-sus2" data-mod="sus2">
@@ -35,8 +45,7 @@
                     <option value="3">Uncommon</option>
                     <option value="4">Common</option>
                     <option value="5">Abundant</option>
-                    <option value="6">Always</option>
-                </select>
+                                    </select>
             </label>
             <label>sus4
                 <select name="tg-mod-sus4" data-mod="sus4">
@@ -46,8 +55,7 @@
                     <option value="3">Uncommon</option>
                     <option value="4">Common</option>
                     <option value="5">Abundant</option>
-                    <option value="6">Always</option>
-                </select>
+                                    </select>
             </label>
             <label>diminished
                 <select name="tg-mod-dim" data-mod="dim">
@@ -57,8 +65,7 @@
                     <option value="3">Uncommon</option>
                     <option value="4">Common</option>
                     <option value="5">Abundant</option>
-                    <option value="6">Always</option>
-                </select>
+                                    </select>
             </label>
             <label>augmented
                 <select name="tg-mod-aug" data-mod="aug">
@@ -68,8 +75,7 @@
                     <option value="3">Uncommon</option>
                     <option value="4">Common</option>
                     <option value="5">Abundant</option>
-                    <option value="6">Always</option>
-                </select>
+                                    </select>
             </label>
             <label>power
                 <select name="tg-mod-power" data-mod="power">
@@ -79,8 +85,7 @@
                     <option value="3">Uncommon</option>
                     <option value="4">Common</option>
                     <option value="5">Abundant</option>
-                    <option value="6">Always</option>
-                </select>
+                                    </select>
             </label>
         </fieldset>
     </div>
@@ -95,8 +100,7 @@
                 <option value="3" selected>Uncommon</option>
                 <option value="4">Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
         <label>Natural Minor
             <select name="tg-mode-natural" data-mode="Natural Minor">
@@ -106,8 +110,7 @@
                 <option value="3">Uncommon</option>
                 <option value="4" selected>Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
         <label>Dorian
             <select name="tg-mode-dorian" data-mode="Dorian">
@@ -117,8 +120,7 @@
                 <option value="3">Uncommon</option>
                 <option value="4">Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
         <label>Phrygian
             <select name="tg-mode-phrygian" data-mode="Phrygian">
@@ -128,8 +130,7 @@
                 <option value="3">Uncommon</option>
                 <option value="4">Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
         <label>Lydian
             <select name="tg-mode-lydian" data-mode="Lydian">
@@ -139,8 +140,7 @@
                 <option value="3">Uncommon</option>
                 <option value="4">Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
         <label>Mixolydian
             <select name="tg-mode-mixolydian" data-mode="Mixolydian">
@@ -150,8 +150,7 @@
                 <option value="3">Uncommon</option>
                 <option value="4">Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
         <label>Locrian
             <select name="tg-mode-locrian" data-mode="Locrian">
@@ -161,8 +160,7 @@
                 <option value="3">Uncommon</option>
                 <option value="4">Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
     </fieldset>
 
@@ -191,8 +189,7 @@
                 <option value="3">Uncommon</option>
                 <option value="4">Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
         <label>Tempo Shift
             <select name="tg-song-tempo" data-song="Tempo Shift">
@@ -202,8 +199,7 @@
                 <option value="3">Uncommon</option>
                 <option value="4">Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
         <label>Dynamics Change
             <select name="tg-song-dynamics" data-song="Dynamics Change">
@@ -213,8 +209,7 @@
                 <option value="3">Uncommon</option>
                 <option value="4">Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
         <label>Rhythm Variation
             <select name="tg-song-rhythm" data-song="Rhythm Variation">
@@ -224,8 +219,7 @@
                 <option value="3">Uncommon</option>
                 <option value="4">Common</option>
                 <option value="5">Abundant</option>
-                <option value="6">Always</option>
-            </select>
+                            </select>
         </label>
     </fieldset>
 

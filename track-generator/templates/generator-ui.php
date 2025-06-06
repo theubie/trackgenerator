@@ -14,6 +14,22 @@
         <input id="tg-bpm-max" type="number" value="160">
     </fieldset>
 
+    <fieldset>
+        <legend>Allowed Keys</legend>
+        <label><input type="checkbox" class="tg-key-option" value="A" checked> A</label>
+        <label><input type="checkbox" class="tg-key-option" value="A#" checked> A#</label>
+        <label><input type="checkbox" class="tg-key-option" value="B" checked> B</label>
+        <label><input type="checkbox" class="tg-key-option" value="C" checked> C</label>
+        <label><input type="checkbox" class="tg-key-option" value="C#" checked> C#</label>
+        <label><input type="checkbox" class="tg-key-option" value="D" checked> D</label>
+        <label><input type="checkbox" class="tg-key-option" value="D#" checked> D#</label>
+        <label><input type="checkbox" class="tg-key-option" value="E" checked> E</label>
+        <label><input type="checkbox" class="tg-key-option" value="F" checked> F</label>
+        <label><input type="checkbox" class="tg-key-option" value="F#" checked> F#</label>
+        <label><input type="checkbox" class="tg-key-option" value="G" checked> G</label>
+        <label><input type="checkbox" class="tg-key-option" value="G#" checked> G#</label>
+    </fieldset>
+
     <label><input type="checkbox" id="tg-adv-toggle"> Advanced Mode</label>
 
     <div id="tg-advanced" class="tg-advanced-options">

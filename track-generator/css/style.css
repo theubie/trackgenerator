@@ -33,6 +33,7 @@
     margin-right: 0.25em;
     vertical-align: bottom;
     background: #fff;
+    cursor: pointer;
 }
 
 .slot-reel {
@@ -67,15 +68,30 @@
     margin-bottom: 1em;
 }
 
+.tg-degrees {
+    color: #666;
+    font-style: italic;
+}
+
+.tg-chords {
+    color: #000;
+    font-weight: bold;
+}
+
 /* Basic layout tweaks */
 .tg-container fieldset {
     margin-bottom: 1em;
-    padding: 0.5em;
+    padding: 1rem;
     border: 1px solid #ccc;
+    background: #f8f8f8;
+    border-radius: 8px;
 }
 
 .tg-container legend {
     font-weight: bold;
+    border-left: 4px solid #007acc;
+    padding-left: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 /* Modern form elements */
@@ -101,6 +117,28 @@
 
 .tg-container button:hover {
     background: #006799;
+}
+
+#tg-output-summary {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 0.25em 0.5em;
+    border-bottom: 1px solid #ccc;
+    z-index: 10;
+}
+
+.tg-toast {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 

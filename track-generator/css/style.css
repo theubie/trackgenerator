@@ -42,3 +42,29 @@
     line-height: 2em;
     text-align: center;
 }
+
+.tg-prog-list {
+    margin-bottom: 0.5em;
+}
+
+.tg-prog-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5em;
+}
+
+.tg-prog-row input[type="text"] {
+    flex: 1;
+}
+
+.tg-prog-row button {
+    margin-left: 0.5em;
+}
+
+.tg-prog-result {
+    margin-bottom: 1em;
+}
+
+.tg-slot-wrap {
+    margin-bottom: 1em;
+}

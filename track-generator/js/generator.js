@@ -191,6 +191,11 @@
             $('#tg-advanced').toggle(this.checked);
         }).trigger('change');
 
+        $('#tg-settings-toggle').on('click', function(){
+            $('#tg-settings').toggleClass('collapsed');
+            $(this).text($('#tg-settings').hasClass('collapsed') ? 'Show Settings' : 'Hide Settings');
+        });
+
         $('#tg-suggest-song').on('change', function(){
             $('#tg-song-elements').toggle(this.checked);
         }).trigger('change');
@@ -212,6 +217,8 @@
     });
 
     $(document).on('click', '#tg-generate', function() {
+        $('#tg-settings').addClass('collapsed');
+        $('#tg-settings-toggle').text('Show Settings');
         var bpmMin = parseInt($('#tg-bpm-min').val(), 10);
         var bpmMax = parseInt($('#tg-bpm-max').val(), 10);
         var modeWeights = {};

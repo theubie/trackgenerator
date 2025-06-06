@@ -9,6 +9,14 @@
     margin: 0.5em 0 0.2em;
 }
 
+#tg-settings.collapsed {
+    display: none;
+}
+
+#tg-settings-toggle {
+    margin-left: 0.5em;
+}
+
 .tg-advanced-options {
     display: none;
     margin-top: 0.5em;

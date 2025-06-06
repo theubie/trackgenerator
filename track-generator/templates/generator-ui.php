@@ -9,6 +9,11 @@
         <legend>Modes</legend>
         <label><input type="checkbox" name="tg-modes[]" value="Major" checked> Major</label>
         <label><input type="checkbox" name="tg-modes[]" value="Natural Minor" checked> Natural Minor</label>
+        <label><input type="checkbox" name="tg-modes[]" value="Dorian"> Dorian</label>
+        <label><input type="checkbox" name="tg-modes[]" value="Phrygian"> Phrygian</label>
+        <label><input type="checkbox" name="tg-modes[]" value="Lydian"> Lydian</label>
+        <label><input type="checkbox" name="tg-modes[]" value="Mixolydian"> Mixolydian</label>
+        <label><input type="checkbox" name="tg-modes[]" value="Locrian"> Locrian</label>
     </fieldset>
 
     <fieldset>

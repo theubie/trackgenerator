@@ -10,7 +10,7 @@ This lightweight plugin adds a track idea generator to any WordPress site. It pr
    - Users select a minimum and maximum BPM (default 60–160).
    - The app outputs a random BPM in that range.
 2. **Key + Mode Selector**
-   - Checkboxes allow the user to enable modes (Major or Natural Minor).
+   - Checkboxes allow the user to enable any of the seven modes (Ionian/Major, Dorian, Phrygian, Lydian, Mixolydian, Aeolian/Natural Minor, Locrian).
    - A key from A–G# is randomly chosen along with one of the selected modes.
 3. **Chord Progression Generator**
    - *Tried and True*: chooses from a curated list of common progressions such as `1 - 4 - 5`.

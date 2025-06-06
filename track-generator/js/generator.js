@@ -239,17 +239,15 @@
 
         var bpm = tg.generateBPM(bpmMin, bpmMax);
         var keyObj = tg.generateKey(modeWeights);
-        var result = '';
-        result += '<p><strong>BPM:</strong> ' + bpm + '</p>';
-        result += '<p><strong>Key:</strong> ' + keyObj.text + '</p>';
+        var result = '<div id="tg-output-summary"><strong>' + keyObj.text + '</strong> - ' + bpm + ' BPM</div>';
         var allChords = [];
         for (var p = 0; p < progNames.length; p++) {
             var progDegrees = tg.generateProgression(progType, progLength);
             var chords = tg.renderProgression(progDegrees, keyObj, advEnabled ? modWeights : null);
             result += '<section class="tg-prog-result">';
             result += '<h4>' + progNames[p] + '</h4>';
-            result += '<p><strong>Degrees:</strong> ' + progDegrees.join(' - ') + '</p>';
-            result += '<p><em>Chords:</em> ' + chords.join(' - ') + '</p>';
+            result += '<p class="tg-degrees"><strong>Degrees:</strong> ' + progDegrees.join(' - ') + '</p>';
+            result += '<p class="tg-chords"><em>Chords:</em> ' + chords.join(' - ') + '</p>';
             result += '<div class="tg-slots-group"></div>';
             result += '</section>';
             allChords.push(chords);
@@ -268,10 +266,31 @@
             var chords = allChords[p];
             var $group = $(this).find('.tg-slots-group');
             for (var i = 0; i < chords.length; i++) {
-                var $slot = $('<div class="slot"><div class="slot-reel"></div></div>');
+                var $slot = $('<div class="slot" title="Click to copy" data-chord="' + chords[i] + '"><div class="slot-reel"></div></div>');
                 $group.append($slot);
                 spinSlot($slot, chords[i], p * 500 + i * 150);
             }
         });
     });
+
+    $(document).on('click', '.slot', function(){
+        var chord = $(this).data('chord');
+        if (chord && navigator.clipboard) {
+            navigator.clipboard.writeText(chord).then(function(){
+                showToast('Copied!');
+            });
+        }
+    });
+
+    function showToast(msg) {
+        var $toast = $('#tg-toast');
+        if (!$toast.length) {
+            $toast = $('<div id="tg-toast" class="tg-toast"></div>').appendTo('body');
+        }
+        $toast.text(msg).css('opacity', 1);
+        clearTimeout($toast.data('timer'));
+        $toast.data('timer', setTimeout(function(){
+            $toast.css('opacity', 0);
+        }, 1000));
+    }
 })(jQuery);

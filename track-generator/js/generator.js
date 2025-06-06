@@ -11,13 +11,13 @@
             var keys = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
             var key = keys[randomInt(0, keys.length - 1)];
             var mode = modes[randomInt(0, modes.length - 1)];
-            return key + ' ' + mode;
+            return { key: key, mode: mode, text: key + ' ' + mode };
         },
         generateProgression: function(type, length) {
             var tried = [
-                '1 - 4 - 5',
-                '6 - 4 - 1 - 5',
-                '2 - 5 - 1'
+                [1,4,5],
+                [6,4,1,5],
+                [2,5,1]
             ];
             if(type === 'tried') {
                 return tried[randomInt(0, tried.length - 1)];
@@ -26,37 +26,106 @@
             for(var i=0; i<length; i++) {
                 prog.push(randomInt(1,7));
             }
-            return prog.join(' - ');
+            return prog;
+        },
+
+        modeFormulas: {
+            'Major':      [0,2,4,5,7,9,11],
+            'Natural Minor': [0,2,3,5,7,8,10],
+            'Dorian':     [0,2,3,5,7,9,10],
+            'Phrygian':   [0,1,3,5,7,8,10],
+            'Lydian':     [0,2,4,6,7,9,11],
+            'Mixolydian': [0,2,4,5,7,9,10],
+            'Locrian':    [0,1,3,5,6,8,10]
+        },
+
+        degreeQualities: {
+            'Major':      ['maj','min','min','maj','maj','min','dim'],
+            'Natural Minor': ['min','dim','maj','min','min','maj','maj'],
+            'Dorian':     ['min','min','maj','maj','min','dim','maj'],
+            'Phrygian':   ['min','maj','maj','min','dim','maj','min'],
+            'Lydian':     ['maj','maj','min','dim','maj','min','min'],
+            'Mixolydian': ['maj','min','dim','maj','min','min','maj'],
+            'Locrian':    ['dim','maj','min','min','maj','maj','min']
+        },
+
+        buildScale: function(key, mode) {
+            var notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+            var start = notes.indexOf(key);
+            if(start === -1) { start = 0; }
+            var formula = this.modeFormulas[mode] || this.modeFormulas['Major'];
+            var scale = [];
+            for(var i=0;i<formula.length;i++) {
+                scale.push(notes[(start + formula[i]) % 12]);
+            }
+            return scale;
+        },
+
+        renderChord: function(note, quality, modifiers) {
+            var name = note;
+            if(quality === 'min') { name += 'm'; }
+            if(quality === 'dim') { name += 'dim'; }
+            if(quality === 'maj') { name += 'maj'; }
+            if(modifiers && modifiers.length) {
+                name += modifiers.join('');
+            }
+            return name;
+        },
+
+        renderProgression: function(degrees, keyObj, modifiers) {
+            var scale = this.buildScale(keyObj.key, keyObj.mode);
+            var qualities = this.degreeQualities[keyObj.mode] || this.degreeQualities['Major'];
+            var chords = [];
+            for(var i=0;i<degrees.length;i++) {
+                var deg = degrees[i]-1;
+                var chord = this.renderChord(scale[deg], qualities[deg], modifiers);
+                chords.push(chord);
+            }
+            return chords;
         }
     };
 
     $(function() {
-        if (!window.localStorage) { return; }
-        var stored = localStorage.getItem('tg-options');
-        if (!stored) { return; }
-        try {
-            var opts = JSON.parse(stored);
-            if (opts.bpmMin !== undefined) {
-                $('#tg-bpm-min').val(opts.bpmMin);
-            }
-            if (opts.bpmMax !== undefined) {
-                $('#tg-bpm-max').val(opts.bpmMax);
-            }
-            if (Array.isArray(opts.modes)) {
-                $('input[name="tg-modes[]"]').prop('checked', false).each(function(){
-                    if (opts.modes.indexOf($(this).val()) !== -1) {
-                        $(this).prop('checked', true);
-                    }
-                });
-            }
-            if (opts.progType) {
-                $('input[name="tg-prog-type"][value="' + opts.progType + '"]')
-                    .prop('checked', true);
-            }
-            if (opts.progLength !== undefined) {
-                $('#tg-prog-length').val(opts.progLength);
-            }
-        } catch(e) {}
+        var stored = window.localStorage ? localStorage.getItem('tg-options') : null;
+        if (stored) {
+            try {
+                var opts = JSON.parse(stored);
+                if (opts.bpmMin !== undefined) {
+                    $('#tg-bpm-min').val(opts.bpmMin);
+                }
+                if (opts.bpmMax !== undefined) {
+                    $('#tg-bpm-max').val(opts.bpmMax);
+                }
+                if (Array.isArray(opts.modes)) {
+                    $('input[name="tg-modes[]"]').prop('checked', false).each(function(){
+                        if (opts.modes.indexOf($(this).val()) !== -1) {
+                            $(this).prop('checked', true);
+                        }
+                    });
+                }
+                if (opts.progType) {
+                    $('input[name="tg-prog-type"][value="' + opts.progType + '"]')
+                        .prop('checked', true);
+                }
+                if (opts.progLength !== undefined) {
+                    $('#tg-prog-length').val(opts.progLength);
+                }
+                if (opts.advEnabled) {
+                    $('#tg-adv-toggle').prop('checked', true);
+                    $('#tg-advanced').show();
+                }
+                if (Array.isArray(opts.modifiers)) {
+                    $('input[name="tg-modifiers[]"]').prop('checked', false).each(function(){
+                        if (opts.modifiers.indexOf($(this).val()) !== -1) {
+                            $(this).prop('checked', true);
+                        }
+                    });
+                }
+            } catch(e) {}
+        }
+        $('#tg-adv-toggle').on('change', function(){
+            $('#tg-advanced').toggle(this.checked);
+        }).trigger('change');
     });
 
     $(document).on('click', '#tg-generate', function() {
@@ -68,6 +137,11 @@
         });
         var progType = $('input[name="tg-prog-type"]:checked').val();
         var progLength = parseInt($('#tg-prog-length').val(), 10) || 4;
+        var advEnabled = $('#tg-adv-toggle').is(':checked');
+        var modifiers = [];
+        $('input[name="tg-modifiers[]"]:checked').each(function(){
+            modifiers.push($(this).val());
+        });
 
         if (window.localStorage) {
             var opts = {
@@ -75,15 +149,23 @@
                 bpmMax: bpmMax,
                 modes: modes,
                 progType: progType,
-                progLength: progLength
+                progLength: progLength,
+                advEnabled: advEnabled,
+                modifiers: modifiers
             };
             localStorage.setItem('tg-options', JSON.stringify(opts));
         }
 
+        var keyObj = tg.generateKey(modes);
+        var progDegrees = tg.generateProgression(progType, progLength);
         var result = '';
         result += '<p><strong>BPM:</strong> ' + tg.generateBPM(bpmMin, bpmMax) + '</p>';
-        result += '<p><strong>Key:</strong> ' + tg.generateKey(modes) + '</p>';
-        result += '<p><strong>Progression:</strong> ' + tg.generateProgression(progType, progLength) + '</p>';
+        result += '<p><strong>Key:</strong> ' + keyObj.text + '</p>';
+        result += '<p><strong>Progression:</strong> ' + progDegrees.join(' - ') + '</p>';
+        if (advEnabled) {
+            var chords = tg.renderProgression(progDegrees, keyObj, modifiers);
+            result += '<p><strong>Chords:</strong> ' + chords.join(' - ') + '</p>';
+        }
 
         $('#tg-output').html(result);
     });

@@ -1,6 +1,6 @@
 <div class="tg-container">
+    <button id="tg-generate">Generate</button>
     <div id="tg-output"></div>
-    <div id="tg-slots" class="tg-slots"></div>
 
     <fieldset>
         <legend>Tempo</legend>
@@ -229,6 +229,5 @@
         </label>
     </fieldset>
 
-    <button id="tg-generate">Generate</button>
 </div>
 

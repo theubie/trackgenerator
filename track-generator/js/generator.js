@@ -317,7 +317,7 @@
         var $popup = $('<div class="tg-chord-popup"></div>');
         var $close = $('<button type="button" class="tg-chord-close">&times;</button>');
         var customId = 'scapi-' + Date.now();
-        var $content = $('<div class="scales_chords_api" data-chord="' + chord + '" data-instrument="guitar" data-output="image" customid="' + customId + '"></div>');
+        var $content = $('<div class="scales_chords_api" chord="' + chord + '" instrument="guitar" output="image" customid="' + customId + '"></div>');
         $popup.append($close).append($content);
         $('body').append($overlay).append($popup);
         $close.on('click', remove);

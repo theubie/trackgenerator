@@ -316,12 +316,15 @@
         var $overlay = $('<div class="tg-chord-overlay"></div>');
         var $popup = $('<div class="tg-chord-popup"></div>');
         var $close = $('<button type="button" class="tg-chord-close">&times;</button>');
-        var $content = $('<div class="scales_chords_api" data-chord="' + chord + '" data-instrument="guitar" data-output="image"></div>');
+        var customId = 'scapi-' + Date.now();
+        var $content = $('<div class="scales_chords_api" data-chord="' + chord + '" data-instrument="guitar" data-output="image" customid="' + customId + '"></div>');
         $popup.append($close).append($content);
         $('body').append($overlay).append($popup);
         $close.on('click', remove);
         $overlay.on('click', remove);
-        if (window.renderScalesChords) {
+        if (window.scales_chords_api_refresh) {
+            window.scales_chords_api_refresh(customId);
+        } else if (window.renderScalesChords) {
             window.renderScalesChords();
         }
         function remove() {

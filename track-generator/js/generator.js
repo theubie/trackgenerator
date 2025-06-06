@@ -332,7 +332,7 @@ function addProgRow(name) {
             result += '<h4>' + progNames[p] + '</h4>';
             result += '<p class="tg-degrees"><strong>Degrees:</strong> ' + progDegrees.join(' - ') + '</p>';
             var chordLinks = chords.map(function(c){
-                return '<span class="tg-chord-wrap"><a href="#" class="tg-chord-link" data-chord="' + c.chord + '">' + c.chord + '</a> <span class="tg-roman">(' + c.roman + ')</span> <button type="button" class="tg-copy-btn" data-chord="' + c.chord + '">&#128203;</button></span>';
+                return '<span class="tg-chord-wrap"><a href="#" class="tg-chord-link" data-chord="' + c.chord + '">' + c.chord + '</a> <span class="tg-roman">(' + c.roman + ')</span></span>';
             });
             result += '<p class="tg-chords"><em>Chords:</em> ' + chordLinks.join(' ') + '</p>';
             result += '<div class="tg-slots-group"></div>';
@@ -354,30 +354,13 @@ function addProgRow(name) {
             var $group = $(this).find('.tg-slots-group');
             for (var i = 0; i < chords.length; i++) {
                 var ch = chords[i].chord;
-                var $slot = $('<div class="slot" title="Click to copy" data-chord="' + ch + '"><div class="slot-reel"></div></div>');
+                var $slot = $('<div class="slot" data-chord="' + ch + '"><div class="slot-reel"></div></div>');
                 $group.append($slot);
                 spinSlot($slot, ch, p * 500 + i * 150);
             }
         });
     });
 
-    $(document).on('click', '.slot', function(){
-        var chord = $(this).data('chord');
-        if (chord && navigator.clipboard) {
-            navigator.clipboard.writeText(chord).then(function(){
-                showToast('Copied!');
-            });
-        }
-    });
-
-    $(document).on('click', '.tg-copy-btn', function(){
-        var chord = $(this).data('chord');
-        if (chord && navigator.clipboard) {
-            navigator.clipboard.writeText(chord).then(function(){
-                showToast('Copied!');
-            });
-        }
-    });
 
     $(document).on('click', '.tg-chord-link', function(e){
         e.preventDefault();
@@ -386,18 +369,6 @@ function addProgRow(name) {
             showChordPopup(chord);
         }
     });
-
-    function showToast(msg) {
-        var $toast = $('#tg-toast');
-        if (!$toast.length) {
-            $toast = $('<div id="tg-toast" class="tg-toast"></div>').appendTo('body');
-        }
-        $toast.text(msg).css('opacity', 1);
-        clearTimeout($toast.data('timer'));
-        $toast.data('timer', setTimeout(function(){
-            $toast.css('opacity', 0);
-        }, 1000));
-    }
 
     function showChordPopup(chord) {
         var $overlay = $('<div class="tg-chord-overlay"></div>');

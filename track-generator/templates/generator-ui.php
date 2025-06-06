@@ -1,6 +1,9 @@
 <div class="tg-container">
     <button id="tg-generate">Generate</button>
+    <button type="button" id="tg-settings-toggle">Hide Settings</button>
     <div id="tg-output"></div>
+
+    <div id="tg-settings">
 
     <fieldset>
         <legend>Tempo</legend>
@@ -222,6 +225,8 @@
                             </select>
         </label>
     </fieldset>
+
+    </div> <!-- end tg-settings -->
 
 </div>
 

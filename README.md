@@ -8,6 +8,7 @@ A WordPress plugin that generates random ideas for new music tracks. It provides
 - Key and mode selector supporting all seven modes (Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
 - Two chord progression modes: "Tried and True" or a fully random sequence
 - Optional Advanced Mode with chord modifiers and rendered chord names
+- Collapsible settings panel that hides after generating results
 
 ## Installation
 

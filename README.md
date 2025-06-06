@@ -21,4 +21,4 @@ The plugin uses vanilla JavaScript and minimal styling. See [DESIGN.md](DESIGN.m
 
 ### Advanced Mode
 
-Check the **Advanced Mode** box to reveal additional options for chord modifiers. When enabled, generated progressions include rendered chord names.
+Check the **Advanced Mode** box to reveal additional options for chord modifiers. When enabled, a single random modifier (or none) is applied to each chord and the resulting progression includes rendered chord names.

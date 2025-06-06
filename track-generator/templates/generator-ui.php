@@ -7,27 +7,210 @@
 
     <label><input type="checkbox" id="tg-adv-toggle"> Advanced Mode</label>
 
+    <label for="tg-num-progs">Number of Progressions</label>
+    <input id="tg-num-progs" type="number" value="1" max="16">
+
+    <label><input type="checkbox" id="tg-suggest-song"> Suggest Song-Level Elements</label>
+
     <div id="tg-advanced" class="tg-advanced-options">
         <fieldset>
             <legend>Chord Modifiers</legend>
-            <label><input type="checkbox" name="tg-modifiers[]" value="7"> 7th</label>
-            <label><input type="checkbox" name="tg-modifiers[]" value="sus2"> sus2</label>
-            <label><input type="checkbox" name="tg-modifiers[]" value="sus4"> sus4</label>
-            <label><input type="checkbox" name="tg-modifiers[]" value="dim"> diminished</label>
-            <label><input type="checkbox" name="tg-modifiers[]" value="aug"> augmented</label>
-            <label><input type="checkbox" name="tg-modifiers[]" value="power"> power</label>
+            <label>7th
+                <select name="tg-mod-7" data-mod="7">
+                    <option value="0">None</option>
+                    <option value="1">Very Rare</option>
+                    <option value="2">Rare</option>
+                    <option value="3">Uncommon</option>
+                    <option value="4">Common</option>
+                    <option value="5">Abundant</option>
+                    <option value="6">Always</option>
+                </select>
+            </label>
+            <label>sus2
+                <select name="tg-mod-sus2" data-mod="sus2">
+                    <option value="0">None</option>
+                    <option value="1">Very Rare</option>
+                    <option value="2">Rare</option>
+                    <option value="3">Uncommon</option>
+                    <option value="4">Common</option>
+                    <option value="5">Abundant</option>
+                    <option value="6">Always</option>
+                </select>
+            </label>
+            <label>sus4
+                <select name="tg-mod-sus4" data-mod="sus4">
+                    <option value="0">None</option>
+                    <option value="1">Very Rare</option>
+                    <option value="2">Rare</option>
+                    <option value="3">Uncommon</option>
+                    <option value="4">Common</option>
+                    <option value="5">Abundant</option>
+                    <option value="6">Always</option>
+                </select>
+            </label>
+            <label>diminished
+                <select name="tg-mod-dim" data-mod="dim">
+                    <option value="0">None</option>
+                    <option value="1">Very Rare</option>
+                    <option value="2">Rare</option>
+                    <option value="3">Uncommon</option>
+                    <option value="4">Common</option>
+                    <option value="5">Abundant</option>
+                    <option value="6">Always</option>
+                </select>
+            </label>
+            <label>augmented
+                <select name="tg-mod-aug" data-mod="aug">
+                    <option value="0">None</option>
+                    <option value="1">Very Rare</option>
+                    <option value="2">Rare</option>
+                    <option value="3">Uncommon</option>
+                    <option value="4">Common</option>
+                    <option value="5">Abundant</option>
+                    <option value="6">Always</option>
+                </select>
+            </label>
+            <label>power
+                <select name="tg-mod-power" data-mod="power">
+                    <option value="0">None</option>
+                    <option value="1">Very Rare</option>
+                    <option value="2">Rare</option>
+                    <option value="3">Uncommon</option>
+                    <option value="4">Common</option>
+                    <option value="5">Abundant</option>
+                    <option value="6">Always</option>
+                </select>
+            </label>
         </fieldset>
     </div>
 
     <fieldset>
         <legend>Modes</legend>
-        <label><input type="checkbox" name="tg-modes[]" value="Major" checked> Major</label>
-        <label><input type="checkbox" name="tg-modes[]" value="Natural Minor" checked> Natural Minor</label>
-        <label><input type="checkbox" name="tg-modes[]" value="Dorian"> Dorian</label>
-        <label><input type="checkbox" name="tg-modes[]" value="Phrygian"> Phrygian</label>
-        <label><input type="checkbox" name="tg-modes[]" value="Lydian"> Lydian</label>
-        <label><input type="checkbox" name="tg-modes[]" value="Mixolydian"> Mixolydian</label>
-        <label><input type="checkbox" name="tg-modes[]" value="Locrian"> Locrian</label>
+        <label>Major
+            <select name="tg-mode-major" data-mode="Major">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3" selected>Uncommon</option>
+                <option value="4">Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
+        <label>Natural Minor
+            <select name="tg-mode-natural" data-mode="Natural Minor">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3">Uncommon</option>
+                <option value="4" selected>Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
+        <label>Dorian
+            <select name="tg-mode-dorian" data-mode="Dorian">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3">Uncommon</option>
+                <option value="4">Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
+        <label>Phrygian
+            <select name="tg-mode-phrygian" data-mode="Phrygian">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3">Uncommon</option>
+                <option value="4">Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
+        <label>Lydian
+            <select name="tg-mode-lydian" data-mode="Lydian">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3">Uncommon</option>
+                <option value="4">Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
+        <label>Mixolydian
+            <select name="tg-mode-mixolydian" data-mode="Mixolydian">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3">Uncommon</option>
+                <option value="4">Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
+        <label>Locrian
+            <select name="tg-mode-locrian" data-mode="Locrian">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3">Uncommon</option>
+                <option value="4">Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
+    </fieldset>
+
+    <fieldset id="tg-song-elements" style="display:none;">
+        <legend>Song-Level Elements</legend>
+        <label>Key Change
+            <select name="tg-song-keychange" data-song="Key Change">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3">Uncommon</option>
+                <option value="4">Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
+        <label>Tempo Shift
+            <select name="tg-song-tempo" data-song="Tempo Shift">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3">Uncommon</option>
+                <option value="4">Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
+        <label>Dynamics Change
+            <select name="tg-song-dynamics" data-song="Dynamics Change">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3">Uncommon</option>
+                <option value="4">Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
+        <label>Rhythm Variation
+            <select name="tg-song-rhythm" data-song="Rhythm Variation">
+                <option value="0">None</option>
+                <option value="1">Very Rare</option>
+                <option value="2">Rare</option>
+                <option value="3">Uncommon</option>
+                <option value="4">Common</option>
+                <option value="5">Abundant</option>
+                <option value="6">Always</option>
+            </select>
+        </label>
     </fieldset>
 
     <fieldset>

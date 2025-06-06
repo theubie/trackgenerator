@@ -171,10 +171,38 @@
         }, delay || 0);
     }
 
+    function addProgRow(name) {
+        var $row = $('<div class="tg-prog-row">' +
+            '<input type="text" class="tg-prog-name" placeholder="Progression name">' +
+            '<button type="button" class="tg-remove-prog">Remove</button>' +
+            '</div>');
+        if (name) { $row.find('input').val(name); }
+        $('#tg-prog-list').append($row);
+    }
+
     $(function() {
         $('#tg-adv-toggle').on('change', function(){
             $('#tg-advanced').toggle(this.checked);
         }).trigger('change');
+
+        $('#tg-suggest-song').on('change', function(){
+            $('#tg-song-elements').toggle(this.checked);
+        }).trigger('change');
+
+        $('#tg-add-prog').on('click', function(){
+            addProgRow();
+        });
+
+        $(document).on('click', '.tg-remove-prog', function(){
+            $(this).closest('.tg-prog-row').remove();
+            if ($('#tg-prog-list .tg-prog-row').length === 0) {
+                addProgRow('Progression 1');
+            }
+        });
+
+        if ($('#tg-prog-list .tg-prog-row').length === 0) {
+            addProgRow('Progression 1');
+        }
     });
 
     $(document).on('click', '#tg-generate', function() {
@@ -191,7 +219,12 @@
         $('select[data-mod]').each(function(){
             modWeights[$(this).data('mod')] = parseInt($(this).val(), 10);
         });
-        var numProgs = parseInt($('#tg-num-progs').val(), 10) || 1;
+        var progNames = [];
+        $('#tg-prog-list .tg-prog-row').each(function(idx){
+            var name = $(this).find('.tg-prog-name').val().trim();
+            if (!name) { name = 'Progression ' + (idx + 1); }
+            progNames.push(name);
+        });
         var suggestSong = $('#tg-suggest-song').is(':checked');
         var songWeights = {};
         $('select[data-song]').each(function(){
@@ -203,15 +236,19 @@
         var result = '';
         result += '<p><strong>BPM:</strong> ' + bpm + '</p>';
         result += '<p><strong>Key:</strong> ' + keyObj.text + '</p>';
-        var firstChords = [];
-        for (var p = 0; p < numProgs; p++) {
+        var allChords = [];
+        for (var p = 0; p < progNames.length; p++) {
             var progDegrees = tg.generateProgression(progType, progLength);
-            result += '<p><strong>Progression ' + (p+1) + ':</strong> ' + progDegrees.join(' - ') + '</p>';
+            result += '<section class="tg-prog-result">';
+            result += '<h4>' + progNames[p] + '</h4>';
+            result += '<p><strong>Degrees:</strong> ' + progDegrees.join(' - ') + '</p>';
+            var chords = [];
             if (advEnabled) {
-                var chords = tg.renderProgression(progDegrees, keyObj, modWeights);
-                if (p === 0) { firstChords = chords; }
+                chords = tg.renderProgression(progDegrees, keyObj, modWeights);
                 result += '<p><em>Chords:</em> ' + chords.join(' - ') + '</p>';
             }
+            result += '</section>';
+            allChords.push(chords);
         }
 
         if (suggestSong) {
@@ -225,12 +262,19 @@
 
         var $slots = $('#tg-slots');
         $slots.empty();
-        if (firstChords.length) {
-            for (var i = 0; i < firstChords.length; i++) {
+        for (var p = 0; p < allChords.length; p++) {
+            var chords = allChords[p];
+            if (!chords.length) { continue; }
+            var $wrap = $('<div class="tg-slot-wrap"></div>');
+            $wrap.append('<h4>' + progNames[p] + '</h4>');
+            var $group = $('<div class="tg-slots-group"></div>');
+            for (var i = 0; i < chords.length; i++) {
                 var $slot = $('<div class="slot"><div class="slot-reel"></div></div>');
-                $slots.append($slot);
-                spinSlot($slot, firstChords[i], i * 150);
+                $group.append($slot);
+                spinSlot($slot, chords[i], i * 150);
             }
+            $wrap.append($group);
+            $slots.append($wrap);
         }
     });
 })(jQuery);

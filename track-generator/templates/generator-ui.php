@@ -1,16 +1,17 @@
 <div class="tg-container">
-    <label for="tg-bpm-min">BPM Min</label>
-    <input id="tg-bpm-min" type="number" value="60">
+    <div id="tg-output"></div>
+    <div id="tg-slots" class="tg-slots"></div>
 
-    <label for="tg-bpm-max">BPM Max</label>
-    <input id="tg-bpm-max" type="number" value="160">
+    <fieldset>
+        <legend>Tempo</legend>
+        <label for="tg-bpm-min">BPM Min</label>
+        <input id="tg-bpm-min" type="number" value="60">
+
+        <label for="tg-bpm-max">BPM Max</label>
+        <input id="tg-bpm-max" type="number" value="160">
+    </fieldset>
 
     <label><input type="checkbox" id="tg-adv-toggle"> Advanced Mode</label>
-
-    <label for="tg-num-progs">Number of Progressions</label>
-    <input id="tg-num-progs" type="number" value="1" max="16">
-
-    <label><input type="checkbox" id="tg-suggest-song"> Suggest Song-Level Elements</label>
 
     <div id="tg-advanced" class="tg-advanced-options">
         <fieldset>
@@ -165,6 +166,21 @@
         </label>
     </fieldset>
 
+    <fieldset>
+        <legend>Progression Settings</legend>
+        <label><input type="radio" name="tg-prog-type" value="tried" checked> Tried and True</label>
+        <label><input type="radio" name="tg-prog-type" value="random"> True Random</label>
+        <label for="tg-prog-length">Progression Length (for True Random)</label>
+        <input id="tg-prog-length" type="number" value="4">
+    </fieldset>
+
+    <fieldset>
+        <legend>Progressions</legend>
+        <div id="tg-prog-list" class="tg-prog-list"></div>
+        <button type="button" id="tg-add-prog">Add Progression</button>
+    </fieldset>
+
+    <label><input type="checkbox" id="tg-suggest-song"> Suggest Song-Level Elements</label>
     <fieldset id="tg-song-elements" style="display:none;">
         <legend>Song-Level Elements</legend>
         <label>Key Change
@@ -213,17 +229,6 @@
         </label>
     </fieldset>
 
-    <fieldset>
-        <legend>Progression Type</legend>
-        <label><input type="radio" name="tg-prog-type" value="tried" checked> Tried and True</label>
-        <label><input type="radio" name="tg-prog-type" value="random"> True Random</label>
-    </fieldset>
-
-    <label for="tg-prog-length">Progression Length (for True Random)</label>
-    <input id="tg-prog-length" type="number" value="4">
-
     <button id="tg-generate">Generate</button>
-
-    <div id="tg-output"></div>
-    <div id="tg-slots" class="tg-slots"></div>
 </div>
+

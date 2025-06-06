@@ -42,4 +42,5 @@
     <button id="tg-generate">Generate</button>
 
     <div id="tg-output"></div>
+    <div id="tg-slots" class="tg-slots"></div>
 </div>

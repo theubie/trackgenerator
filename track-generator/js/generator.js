@@ -36,9 +36,10 @@
         generateBPM: function(min, max) {
             return randomInt(min, max);
         },
-        generateKey: function(modeWeights) {
+        generateKey: function(modeWeights, allowedKeys) {
             var keys = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
-            var key = keys[randomInt(0, keys.length - 1)];
+            var pool = (allowedKeys && allowedKeys.length) ? allowedKeys : keys;
+            var key = pool[randomInt(0, pool.length - 1)];
             var modeOptions = [];
             for (var m in modeWeights) {
                 modeOptions.push({ value: m, weight: modeWeights[m] });
@@ -242,6 +243,11 @@ function addProgRow(name) {
                 if (s.flavorWeights[k] !== undefined) { $(this).val(s.flavorWeights[k]); }
             });
         }
+        if (s.keys) {
+            $('.tg-key-option').each(function(){
+                $(this).prop('checked', s.keys.indexOf($(this).val()) !== -1);
+            });
+        }
     }
 
     $(function() {
@@ -306,6 +312,10 @@ function addProgRow(name) {
         $('select[data-song]').each(function(){
             songWeights[$(this).data('song')] = parseInt($(this).val(), 10);
         });
+        var allowedKeys = [];
+        $('.tg-key-option:checked').each(function(){
+            allowedKeys.push($(this).val());
+        });
 
         var settings = {
             bpmMin: bpmMin,
@@ -315,14 +325,15 @@ function addProgRow(name) {
             progLength: progLength,
             advEnabled: advEnabled,
             modWeights: modWeights,
-            flavorWeights: flavorWeights
+            flavorWeights: flavorWeights,
+            keys: allowedKeys
         };
         try {
             localStorage.setItem('tgSettings', JSON.stringify(settings));
         } catch(e) {}
 
         var bpm = tg.generateBPM(bpmMin, bpmMax);
-        var keyObj = tg.generateKey(modeWeights);
+        var keyObj = tg.generateKey(modeWeights, allowedKeys);
         var result = '<div id="tg-output-summary"><strong>' + keyObj.text + '</strong> - ' + bpm + ' BPM</div>';
         var allChords = [];
         for (var p = 0; p < progNames.length; p++) {

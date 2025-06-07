@@ -6,7 +6,7 @@
 
     <div id="tg-settings">
 
-    <fieldset>
+    <fieldset class="tg-collapsible">
         <legend>Tempo</legend>
         <label for="tg-bpm-min">BPM Min</label>
         <input id="tg-bpm-min" type="number" value="60">
@@ -15,7 +15,7 @@
         <input id="tg-bpm-max" type="number" value="160">
     </fieldset>
 
-    <fieldset>
+    <fieldset class="tg-collapsible">
         <legend>Allowed Keys</legend>
         <label><input type="checkbox" class="tg-key-option" value="A" checked> A</label>
         <label><input type="checkbox" class="tg-key-option" value="A#" checked> A#</label>
@@ -34,7 +34,7 @@
     <label><input type="checkbox" id="tg-adv-toggle"> Advanced Mode</label>
 
     <div id="tg-advanced" class="tg-advanced-options">
-        <fieldset>
+        <fieldset class="tg-collapsible">
             <legend>Chord Variation</legend>
             <label>Unmodified
                 <select name="tg-mod-unmodified" data-mod="unmodified">
@@ -108,7 +108,7 @@
                                     </select>
             </label>
         </fieldset>
-        <fieldset>
+        <fieldset class="tg-collapsible">
             <legend>Functional Flavor</legend>
             <label>Borrowed
                 <select name="tg-flavor-borrowed" data-flavor="borrowed">
@@ -135,7 +135,7 @@
         </fieldset>
     </div>
 
-    <fieldset>
+    <fieldset class="tg-collapsible">
         <legend>Modes</legend>
         <label>Major
             <select name="tg-mode-major" data-mode="Major">
@@ -209,7 +209,7 @@
         </label>
     </fieldset>
 
-    <fieldset>
+    <fieldset class="tg-collapsible">
         <legend>Progression Settings</legend>
         <label><input type="radio" name="tg-prog-type" value="tried" checked> Tried and True</label>
         <label><input type="radio" name="tg-prog-type" value="random"> True Random</label>
@@ -217,14 +217,14 @@
         <input id="tg-prog-length" type="number" value="4">
     </fieldset>
 
-    <fieldset>
+    <fieldset class="tg-collapsible">
         <legend>Progressions</legend>
         <div id="tg-prog-list" class="tg-prog-list"></div>
         <button type="button" id="tg-add-prog">Add Progression</button>
     </fieldset>
 
     <label><input type="checkbox" id="tg-suggest-song"> Suggest Song-Level Elements</label>
-    <fieldset id="tg-song-elements" style="display:none;">
+    <fieldset id="tg-song-elements" class="tg-collapsible" style="display:none;">
         <legend>Song-Level Elements</legend>
         <label>Key Change
             <select name="tg-song-keychange" data-song="Key Change">

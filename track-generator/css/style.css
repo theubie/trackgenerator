@@ -81,7 +81,7 @@
 }
 
 .tg-reroll-prog {
-    font-size: 0.8em;
+    font-size: 0.4em;
     padding: 0.15em 0.35em;
     margin-right: 0.25em;
     line-height: 1;
@@ -116,6 +116,15 @@
     border-left: 4px solid currentColor;
     padding-left: 0.5rem;
     margin-bottom: 0.25rem;
+}
+
+/* Collapsible settings sections */
+.tg-collapsible legend {
+    cursor: pointer;
+}
+
+.tg-collapsible.collapsed > *:not(legend) {
+    display: none;
 }
 
 /* Modern form elements */

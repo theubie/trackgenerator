@@ -234,6 +234,24 @@ function addProgRow(name) {
             '</div>');
         if (name) { $row.find('input').val(name); }
         $('#tg-prog-list').append($row);
+        saveProgNames();
+}
+
+function saveProgNames() {
+        var names = [];
+        $('#tg-prog-list .tg-prog-row').each(function(idx){
+            var n = $(this).find('.tg-prog-name').val().trim();
+            if (!n) { n = 'Progression ' + (idx + 1); }
+            names.push(n);
+        });
+        var existing = {};
+        try {
+            existing = JSON.parse(localStorage.getItem('tgSettings')) || {};
+        } catch(e) {}
+        existing.progNames = names;
+        try {
+            localStorage.setItem('tgSettings', JSON.stringify(existing));
+        } catch(e) {}
 }
 
     function loadSettings() {
@@ -275,6 +293,12 @@ function addProgRow(name) {
             $('#tg-dark-toggle').prop('checked', true);
             $('.tg-container').addClass('tg-dark-mode');
         }
+        if (s.progNames && s.progNames.length) {
+            $('#tg-prog-list').empty();
+            for (var i = 0; i < s.progNames.length; i++) {
+                addProgRow(s.progNames[i]);
+            }
+        }
     }
 
     function saveDarkSetting(val) {
@@ -312,6 +336,13 @@ function addProgRow(name) {
             if ($('#tg-prog-list .tg-prog-row').length === 0) {
                 addProgRow('Progression 1');
             }
+            saveProgNames();
+        });
+
+        $(document).on('input', '.tg-prog-name', saveProgNames);
+
+        $(document).on('click', '.tg-collapsible > legend', function(){
+            $(this).parent().toggleClass('collapsed');
         });
 
         $('#tg-dark-toggle').on('change', function(){
@@ -350,6 +381,7 @@ function addProgRow(name) {
             if (!name) { name = 'Progression ' + (idx + 1); }
             progNames.push(name);
         });
+        saveProgNames();
         var suggestSong = $('#tg-suggest-song').is(':checked');
         var songWeights = {};
         $('select[data-song]').each(function(){
@@ -370,7 +402,8 @@ function addProgRow(name) {
             modWeights: modWeights,
             flavorWeights: flavorWeights,
             keys: allowedKeys,
-            darkMode: $('#tg-dark-toggle').is(':checked')
+            darkMode: $('#tg-dark-toggle').is(':checked'),
+            progNames: progNames
         };
         try {
             localStorage.setItem('tgSettings', JSON.stringify(settings));

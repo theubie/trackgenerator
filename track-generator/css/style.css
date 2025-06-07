@@ -233,4 +233,9 @@
     color: #ccc;
 }
 
+.tg-container.tg-dark-mode .slot {
+    background: #444;
+    border-color: #666;
+}
+
 

@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Track Generator
  * Description:       Generates random BPM, key, mode, and chord progressions.
- * Version:           0.8.1
+ * Version:           0.8.2
  * Author:            Randell Miller of Infinite Possibility Media
  * Plugin URI:        https://github.com/theubie/trackgenerator
  * Author URI:        https://infinitepossibility.media
@@ -18,10 +18,11 @@ if (!defined('ABSPATH')) {
 }
 
 if (!defined('TRACK_GENERATOR_VERSION')) {
-    define('TRACK_GENERATOR_VERSION', '0.8.1');
+    define('TRACK_GENERATOR_VERSION', '0.8.2');
 }
 
 require_once plugin_dir_path(__FILE__) . 'update-checker.php';
+require_once plugin_dir_path(__FILE__) . 'plugin-info.php';
 
 function tg_enqueue_assets() {
     wp_enqueue_style(

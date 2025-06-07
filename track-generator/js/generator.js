@@ -15,6 +15,10 @@
 
     var romanNums = ['I','II','III','IV','V','VI','VII'];
 
+    // Holds the most recently generated settings so individual
+    // progressions can be rerolled without affecting others
+    var tgState = null;
+
     function weightedRandom(options) {
         var total = 0;
         for (var i = 0; i < options.length; i++) {
@@ -371,13 +375,25 @@ function addProgRow(name) {
 
         var bpm = tg.generateBPM(bpmMin, bpmMax);
         var keyObj = tg.generateKey(modeWeights, allowedKeys);
+
+        tgState = {
+            bpm: bpm,
+            keyObj: keyObj,
+            progType: progType,
+            progLength: progLength,
+            advEnabled: advEnabled,
+            modWeights: modWeights,
+            flavorWeights: flavorWeights,
+            progNames: progNames
+        };
         var result = '<div id="tg-output-summary"><strong>' + keyObj.text + '</strong> - ' + bpm + ' BPM</div>';
         var allChords = [];
         for (var p = 0; p < progNames.length; p++) {
             var progDegrees = tg.generateProgression(progType, progLength);
             var chords = tg.renderProgression(progDegrees, keyObj, advEnabled ? modWeights : null, advEnabled ? flavorWeights : null);
-            result += '<section class="tg-prog-result">';
+            result += '<section class="tg-prog-result" data-idx="' + p + '">';
             result += '<h4>' + progNames[p] + '</h4>';
+            result += '<button type="button" class="tg-reroll-prog" data-idx="' + p + '">Reroll</button>';
             result += '<p class="tg-degrees"><strong>Degrees:</strong> ' + progDegrees.join(' - ') + '</p>';
             var chordLinks = chords.map(function(c){
                 return '<span class="tg-chord-wrap"><a href="#" class="tg-chord-link" data-chord="' + c.chord + '">' + c.chord + '</a> <span class="tg-roman">(' + c.roman + ')</span></span>';
@@ -407,6 +423,33 @@ function addProgRow(name) {
                 spinSlot($slot, ch, p * 500 + i * 150);
             }
         });
+    });
+
+    // Reroll a single progression without affecting others
+    $(document).on('click', '.tg-reroll-prog', function(){
+        var idx = parseInt($(this).data('idx'), 10);
+        if (tgState && !isNaN(idx)) {
+            var progDegrees = tg.generateProgression(tgState.progType, tgState.progLength);
+            var chords = tg.renderProgression(
+                progDegrees,
+                tgState.keyObj,
+                tgState.advEnabled ? tgState.modWeights : null,
+                tgState.advEnabled ? tgState.flavorWeights : null
+            );
+            var $section = $('#tg-output .tg-prog-result').eq(idx);
+            $section.find('.tg-degrees').html('<strong>Degrees:</strong> ' + progDegrees.join(' - '));
+            var chordLinks = chords.map(function(c){
+                return '<span class="tg-chord-wrap"><a href="#" class="tg-chord-link" data-chord="' + c.chord + '">' + c.chord + '</a> <span class="tg-roman">(' + c.roman + ')</span></span>';
+            });
+            $section.find('.tg-chords').html('<em>Chords:</em> ' + chordLinks.join(' '));
+            var $group = $section.find('.tg-slots-group').empty();
+            for (var i = 0; i < chords.length; i++) {
+                var ch = chords[i].chord;
+                var $slot = $('<div class="slot" data-chord="' + ch + '"><div class="slot-reel"></div></div>');
+                $group.append($slot);
+                spinSlot($slot, ch, i * 150);
+            }
+        }
     });
 
 

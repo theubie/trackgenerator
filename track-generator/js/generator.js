@@ -271,7 +271,6 @@ function saveProgNames() {
             $('input[name="tg-prog-type"][value="' + s.progType + '"]').prop('checked', true);
         }
         if (s.progLength) { $('#tg-prog-length').val(s.progLength); }
-        if (s.advEnabled) { $('#tg-adv-toggle').prop('checked', true).trigger('change'); }
         if (s.modWeights) {
             $('select[data-mod]').each(function(){
                 var k = $(this).data('mod');
@@ -314,18 +313,11 @@ function saveProgNames() {
 
     $(function() {
         loadSettings();
-        $('#tg-adv-toggle').on('change', function(){
-            $('#tg-advanced').toggle(this.checked);
-        }).trigger('change');
-
-        $('#tg-settings-toggle').on('click', function(){
-            $('#tg-settings').toggleClass('collapsed');
-            $(this).text($('#tg-settings').hasClass('collapsed') ? 'Show Settings' : 'Hide Settings');
+        $(".tg-collapsible").addClass("collapsed");
+        $("#tg-settings-toggle").on("click", function(){
+            $("#tg-settings").toggleClass("collapsed");
+            $(this).text($("#tg-settings").hasClass("collapsed") ? "Show Settings" : "Hide Settings");
         });
-
-        $('#tg-suggest-song').on('change', function(){
-            $('#tg-song-elements').toggle(this.checked);
-        }).trigger('change');
 
         $('#tg-add-prog').on('click', function(){
             addProgRow();
@@ -356,8 +348,7 @@ function saveProgNames() {
     });
 
     $(document).on('click', '#tg-generate', function() {
-        $('#tg-settings').addClass('collapsed');
-        $('#tg-settings-toggle').text('Show Settings');
+        $("#tg-settings .tg-collapsible").addClass("collapsed");
         var bpmMin = parseInt($('#tg-bpm-min').val(), 10);
         var bpmMax = parseInt($('#tg-bpm-max').val(), 10);
         var modeWeights = {};
@@ -366,7 +357,6 @@ function saveProgNames() {
         });
         var progType = $('input[name="tg-prog-type"]:checked').val();
         var progLength = parseInt($('#tg-prog-length').val(), 10) || 4;
-        var advEnabled = $('#tg-adv-toggle').is(':checked');
         var modWeights = {};
         $('select[data-mod]').each(function(){
             modWeights[$(this).data('mod')] = parseInt($(this).val(), 10);
@@ -382,7 +372,6 @@ function saveProgNames() {
             progNames.push(name);
         });
         saveProgNames();
-        var suggestSong = $('#tg-suggest-song').is(':checked');
         var songWeights = {};
         $('select[data-song]').each(function(){
             songWeights[$(this).data('song')] = parseInt($(this).val(), 10);
@@ -398,7 +387,6 @@ function saveProgNames() {
             modeWeights: modeWeights,
             progType: progType,
             progLength: progLength,
-            advEnabled: advEnabled,
             modWeights: modWeights,
             flavorWeights: flavorWeights,
             keys: allowedKeys,
@@ -417,7 +405,6 @@ function saveProgNames() {
             keyObj: keyObj,
             progType: progType,
             progLength: progLength,
-            advEnabled: advEnabled,
             modWeights: modWeights,
             flavorWeights: flavorWeights,
             progNames: progNames
@@ -426,7 +413,7 @@ function saveProgNames() {
         var allChords = [];
         for (var p = 0; p < progNames.length; p++) {
             var progDegrees = tg.generateProgression(progType, progLength);
-            var chords = tg.renderProgression(progDegrees, keyObj, advEnabled ? modWeights : null, advEnabled ? flavorWeights : null);
+            var chords = tg.renderProgression(progDegrees, keyObj, modWeights, flavorWeights);
             result += '<section class="tg-prog-result" data-idx="' + p + '">';
             result += '<h4>' +
                 '<button type="button" class="tg-reroll-prog" data-idx="' + p + '" aria-label="Reroll">&#x21bb;</button>' +
@@ -442,11 +429,9 @@ function saveProgNames() {
             allChords.push(chords);
         }
 
-        if (suggestSong) {
-            var suggestions = tg.generateSongElements(songWeights, 2);
-            if (suggestions.length) {
-                result += '<p><strong>Song Suggestions:</strong> ' + suggestions.join('; ') + '</p>';
-            }
+        var suggestions = tg.generateSongElements(songWeights, 2);
+        if (suggestions.length) {
+            result += "<p><strong>Song Suggestions:</strong> " + suggestions.join("; ") + "</p>";
         }
 
         $('#tg-output').html(result);
@@ -468,12 +453,7 @@ function saveProgNames() {
         var idx = parseInt($(this).data('idx'), 10);
         if (tgState && !isNaN(idx)) {
             var progDegrees = tg.generateProgression(tgState.progType, tgState.progLength);
-            var chords = tg.renderProgression(
-                progDegrees,
-                tgState.keyObj,
-                tgState.advEnabled ? tgState.modWeights : null,
-                tgState.advEnabled ? tgState.flavorWeights : null
-            );
+            var chords = tg.renderProgression(progDegrees, tgState.keyObj, tgState.modWeights, tgState.flavorWeights);
             var $section = $('#tg-output .tg-prog-result').eq(idx);
             $section.find('.tg-degrees').html('<strong>Degrees:</strong> ' + progDegrees.join(' - '));
             var chordLinks = chords.map(function(c){

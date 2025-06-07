@@ -37,12 +37,23 @@ function tg_check_for_updates($transient) {
     if (version_compare($latest_version, TRACK_GENERATOR_VERSION, '>')) {
         $plugin_slug = plugin_basename(__DIR__ . '/track-generator.php');
 
+        $download_url = $release->zipball_url;
+        if (!empty($release->assets) && is_array($release->assets)) {
+            $expected = 'track-generator-' . $latest_version . '.zip';
+            foreach ($release->assets as $asset) {
+                if (isset($asset->name) && isset($asset->browser_download_url) && $asset->name === $expected) {
+                    $download_url = $asset->browser_download_url;
+                    break;
+                }
+            }
+        }
+
         $plugin = (object) [
             'slug' => 'track-generator',
             'plugin' => $plugin_slug,
             'new_version' => $latest_version,
             'url' => $release->html_url,
-            'package' => $release->zipball_url,
+            'package' => $download_url,
         ];
 
         $transient->response[$plugin_slug] = $plugin;

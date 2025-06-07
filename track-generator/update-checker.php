@@ -19,8 +19,11 @@ function tg_check_for_updates($transient) {
         [
             'headers' => [
                 'Accept' => 'application/vnd.github+json',
-                'User-Agent' => 'WordPress'
-            ]
+                'User-Agent' => 'TrackGenerator/' . TRACK_GENERATOR_VERSION .
+                    ' (+https://github.com/theubie/trackgenerator)'
+            ],
+            'timeout' => 10,
+            'redirection' => 3,
         ]
     );
 

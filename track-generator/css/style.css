@@ -1,7 +1,7 @@
 /* Track Generator basic styles */
 .tg-container {
     padding: 1em;
-    border: 1px solid #ccc;
+    border: 1px solid currentColor;
     max-width: 400px;
 }
 .tg-container label {
@@ -26,7 +26,7 @@
     display: none;
     margin-top: 0.5em;
     padding-top: 0.5em;
-    border-top: 1px dashed #ccc;
+    border-top: 1px dashed currentColor;
 }
 
 /* Animated slot styling */
@@ -41,11 +41,11 @@
     overflow: hidden;
     width: 80px;
     height: 2em;
-    border: 1px solid #ccc;
+    border: 1px solid currentColor;
     border-radius: 4px;
     margin-right: 0.25em;
     vertical-align: bottom;
-    background: #fff;
+    background: inherit;
 }
 
 .slot-reel {
@@ -81,12 +81,12 @@
 }
 
 .tg-degrees {
-    color: #666;
+    color: inherit;
     font-style: italic;
 }
 
 .tg-chords {
-    color: #000;
+    color: inherit;
     font-weight: bold;
 }
 
@@ -94,14 +94,14 @@
 .tg-container fieldset {
     margin-bottom: 1em;
     padding: 1rem;
-    border: 1px solid #ccc;
-    background: #f8f8f8;
+    border: 1px solid currentColor;
+    background: inherit;
     border-radius: 8px;
 }
 
 .tg-container legend {
     font-weight: bold;
-    border-left: 4px solid #007acc;
+    border-left: 4px solid currentColor;
     padding-left: 0.5rem;
     margin-bottom: 0.25rem;
 }
@@ -111,7 +111,7 @@
 .tg-container input[type="text"],
 .tg-container select {
     padding: 0.25em;
-    border: 1px solid #ccc;
+    border: 1px solid currentColor;
     border-radius: 4px;
     width: 100%;
     box-sizing: border-box;
@@ -120,23 +120,23 @@
 .tg-container button {
     padding: 0.5em 1em;
     border: none;
-    background: #0073aa;
-    color: #fff;
+    background: inherit;
+    color: inherit;
     border-radius: 4px;
     cursor: pointer;
     margin-top: 0.5em;
 }
 
 .tg-container button:hover {
-    background: #006799;
+    background: inherit;
 }
 
 #tg-output-summary {
     position: sticky;
     top: 0;
-    background: #fff;
+    background: inherit;
     padding: 0.25em 0.5em;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid currentColor;
     z-index: 10;
 }
 
@@ -155,9 +155,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #fff;
+    background: inherit;
     padding: 1em;
-    border: 1px solid #ccc;
+    border: 1px solid currentColor;
     border-radius: 8px;
     z-index: 1000;
     max-width: 90%;
@@ -179,13 +179,13 @@
 }
 
 .tg-roman {
-    color: #555;
+    color: inherit;
 }
 
 .tg-about {
     margin-top: 1em;
     font-size: 0.9em;
-    color: #555;
+    color: inherit;
 }
 
 /* Dark mode styles */

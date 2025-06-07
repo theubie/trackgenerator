@@ -126,7 +126,7 @@
 }
 
 .tg-container button:hover {
-    background: inherit;
+/*     background: inherit; */
 }
 
 #tg-output-summary {

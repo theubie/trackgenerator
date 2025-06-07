@@ -6,6 +6,11 @@
  * Author:            Randell Miller of Infinite Possibility Media
  * Plugin URI:        https://github.com/theubie/trackgenerator
  * Author URI:        https://infinitepossibility.media
+ * Requires at least: 5.0
+ * Tested up to: 6.5.3
+ * Requires PHP: 7.4
+ * License: BSD-3-Clause
+ * License URI: https://opensource.org/licenses/BSD-3-Clause
  */
 
 if (!defined('ABSPATH')) {

@@ -12,6 +12,12 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
+if (!defined('TRACK_GENERATOR_VERSION')) {
+    define('TRACK_GENERATOR_VERSION', '0.7.0');
+}
+
+require_once plugin_dir_path(__FILE__) . 'update-checker.php';
+
 function tg_enqueue_assets() {
     wp_enqueue_style(
         'track-generator-style',

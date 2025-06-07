@@ -264,6 +264,21 @@ function addProgRow(name) {
                 $(this).prop('checked', s.keys.indexOf($(this).val()) !== -1);
             });
         }
+        if (s.darkMode) {
+            $('#tg-dark-toggle').prop('checked', true);
+            $('.tg-container').addClass('tg-dark-mode');
+        }
+    }
+
+    function saveDarkSetting(val) {
+        var existing = {};
+        try {
+            existing = JSON.parse(localStorage.getItem('tgSettings')) || {};
+        } catch(e) {}
+        existing.darkMode = val;
+        try {
+            localStorage.setItem('tgSettings', JSON.stringify(existing));
+        } catch(e) {}
     }
 
     $(function() {
@@ -291,6 +306,11 @@ function addProgRow(name) {
                 addProgRow('Progression 1');
             }
         });
+
+        $('#tg-dark-toggle').on('change', function(){
+            $('.tg-container').toggleClass('tg-dark-mode', this.checked);
+            saveDarkSetting(this.checked);
+        }).trigger('change');
 
         if ($('#tg-prog-list .tg-prog-row').length === 0) {
             addProgRow('Progression 1');
@@ -342,7 +362,8 @@ function addProgRow(name) {
             advEnabled: advEnabled,
             modWeights: modWeights,
             flavorWeights: flavorWeights,
-            keys: allowedKeys
+            keys: allowedKeys,
+            darkMode: $('#tg-dark-toggle').is(':checked')
         };
         try {
             localStorage.setItem('tgSettings', JSON.stringify(settings));

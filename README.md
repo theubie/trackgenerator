@@ -10,6 +10,7 @@ A WordPress plugin that generates random ideas for new music tracks. It provides
 - Optional Advanced Mode with chord modifiers and rendered chord names
 - Collapsible settings panel that hides after generating results
 - Ability to restrict generation to selected keys
+- Optional dark mode toggle for low-light environments
 
 ## Installation
 

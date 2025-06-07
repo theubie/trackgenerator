@@ -1,6 +1,7 @@
 <div class="tg-container">
     <button id="tg-generate">Generate</button>
     <button type="button" id="tg-settings-toggle">Hide Settings</button>
+    <label class="tg-dark-toggle"><input type="checkbox" id="tg-dark-toggle"> Dark Mode</label>
     <div id="tg-output"></div>
 
     <div id="tg-settings">

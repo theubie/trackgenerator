@@ -9,6 +9,11 @@
     margin: 0.5em 0 0.2em;
 }
 
+.tg-dark-toggle {
+    display: inline-block;
+    margin-left: 0.5em;
+}
+
 #tg-settings.collapsed {
     display: none;
 }
@@ -181,6 +186,51 @@
     margin-top: 1em;
     font-size: 0.9em;
     color: #555;
+}
+
+/* Dark mode styles */
+.tg-container.tg-dark-mode {
+    background: #222;
+    color: #eee;
+    border-color: #555;
+}
+.tg-container.tg-dark-mode fieldset {
+    background: #333;
+    border-color: #555;
+}
+.tg-container.tg-dark-mode input[type="number"],
+.tg-container.tg-dark-mode input[type="text"],
+.tg-container.tg-dark-mode select {
+    background: #444;
+    color: #eee;
+    border-color: #666;
+}
+.tg-container.tg-dark-mode button {
+    background: #006799;
+}
+.tg-container.tg-dark-mode button:hover {
+    background: #005f8f;
+}
+.tg-container.tg-dark-mode #tg-output-summary {
+    background: #333;
+    border-color: #555;
+}
+.tg-container.tg-dark-mode .tg-degrees {
+    color: #bbb;
+}
+.tg-container.tg-dark-mode .tg-chords {
+    color: #fff;
+}
+.tg-container.tg-dark-mode .tg-roman {
+    color: #ccc;
+}
+.tg-container.tg-dark-mode .tg-chord-popup {
+    background: #333;
+    border-color: #555;
+    color: #eee;
+}
+.tg-container.tg-dark-mode .tg-about {
+    color: #ccc;
 }
 
 

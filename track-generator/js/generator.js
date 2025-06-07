@@ -222,6 +222,9 @@
         setTimeout(function(){
             $reel.animate({ marginTop: finalTop }, 500);
         }, delay || 0);
+        setTimeout(function(){
+            $slot.fadeOut(400, function(){ $(this).remove(); });
+        }, (delay || 0) + 2000);
     }
 
 function addProgRow(name) {
@@ -392,8 +395,10 @@ function addProgRow(name) {
             var progDegrees = tg.generateProgression(progType, progLength);
             var chords = tg.renderProgression(progDegrees, keyObj, advEnabled ? modWeights : null, advEnabled ? flavorWeights : null);
             result += '<section class="tg-prog-result" data-idx="' + p + '">';
-            result += '<h4>' + progNames[p] + '</h4>';
-            result += '<button type="button" class="tg-reroll-prog" data-idx="' + p + '">Reroll</button>';
+            result += '<h4>' +
+                '<button type="button" class="tg-reroll-prog" data-idx="' + p + '" aria-label="Reroll">&#x21bb;</button>' +
+                progNames[p] +
+                '</h4>';
             result += '<p class="tg-degrees"><strong>Degrees:</strong> ' + progDegrees.join(' - ') + '</p>';
             var chordLinks = chords.map(function(c){
                 return '<span class="tg-chord-wrap"><a href="#" class="tg-chord-link" data-chord="' + c.chord + '">' + c.chord + '</a> <span class="tg-roman">(' + c.roman + ')</span></span>';

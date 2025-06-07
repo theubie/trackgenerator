@@ -81,7 +81,15 @@
 }
 
 .tg-reroll-prog {
-    margin-bottom: 0.5em;
+    font-size: 0.8em;
+    padding: 0.15em 0.35em;
+    margin-right: 0.25em;
+    line-height: 1;
+    vertical-align: middle;
+    margin-top: 0;
+    background: transparent;
+    border: none;
+    color: inherit;
 }
 
 .tg-degrees {
@@ -212,6 +220,9 @@
 }
 .tg-container.tg-dark-mode button:hover {
     background: #005f8f;
+}
+.tg-container.tg-dark-mode .tg-reroll-prog {
+    background: transparent;
 }
 .tg-container.tg-dark-mode #tg-output-summary {
     background: #333;

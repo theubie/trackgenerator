@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 /**
  * Check GitHub releases for plugin updates.
  *
- * Hooks into pre_set_site_transient_update_plugins and injects update
+ * Hooks into site_transient_update_plugins and injects update
  * information when a newer version is available.
  */
 function tg_check_for_updates($transient) {
@@ -50,4 +50,4 @@ function tg_check_for_updates($transient) {
 
     return $transient;
 }
-add_filter('pre_set_site_transient_update_plugins', 'tg_check_for_updates');
+add_filter('site_transient_update_plugins', 'tg_check_for_updates');

@@ -5,12 +5,14 @@ A WordPress plugin that generates random ideas for new music tracks. It provides
 ## Features
 
 - Random BPM within a configurable range
-- Key and mode selector supporting all seven modes (Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
+- Key + mode generation with weighted mode selection and optional allowed-key filtering
 - Two chord progression modes: "Tried and True" or a fully random sequence
-- Optional Advanced Mode with chord modifiers and rendered chord names
-- Collapsible settings panel that hides after generating results
-- Ability to restrict generation to selected keys
-- Reroll individual progressions without losing others
+- Multiple named progressions per run with per-progression reroll
+- Chord rendering with modifiers (7th, sus2, sus4, dim, aug, power)
+- Optional functional flavoring (borrowed chords, tritone substitutions)
+- Roman numerals and scale chord listing with borrowed-chord callouts
+- Song-level suggestions (key change, tempo shift, dynamics change, rhythm variation)
+- Collapsible settings panel and localStorage persistence
 - Optional dark mode toggle for low-light environments
 
 ## Installation
@@ -21,11 +23,7 @@ A WordPress plugin that generates random ideas for new music tracks. It provides
 
 ## Development
 
-The plugin uses jQuery, Bootstrap, and minimal styling. See [DESIGN.md](DESIGN.md) for the project design and planned enhancements.
-
-### Advanced Mode
-
-Check the **Advanced Mode** box to reveal weighted chord variations. Each variation (7th, sus2, etc.) can be given a probability and an **Unmodified** weight controls how often no change is applied. If Unmodified is set to **Always**, other variation weights are ignored.
+The plugin uses jQuery for UI interactions and loads the Scales & Chords API for chord popups. See [DESIGN.md](DESIGN.md) for the project design and enhancement roadmap.
 
 ## Community and Support
 

@@ -430,9 +430,14 @@ function saveProgNames() {
         var scaleNotes = tg.buildScale(keyObj.key, keyObj.mode);
         var scaleQualities = tg.degreeQualities[keyObj.mode] || tg.degreeQualities['Major'];
         var scaleChords = scaleNotes.map(function(note, idx){
-            return tg.renderChord(note, scaleQualities[idx], []);
+            var quality = scaleQualities[idx];
+            return {
+                chord: tg.renderChord(note, quality, []),
+                roman: tg.romanNumeral(idx + 1, quality)
+            };
         });
         var result = '<div id="tg-output-summary"><strong>' + keyObj.text + '</strong> - ' + bpm + ' BPM</div>';
+        var borrowedFrom = keyObj.key + ' ' + getParallelMode(keyObj.mode);
         var sectionsHtml = '';
         var allChords = [];
         for (var p = 0; p < progNames.length; p++) {
@@ -455,7 +460,7 @@ function saveProgNames() {
             allChords.push(chords);
         }
 
-        result += renderScaleChordsMarkup(scaleChords, collectBorrowedChords(allChords));
+        result += renderScaleChordsMarkup(scaleChords, collectBorrowedChords(allChords), borrowedFrom);
         result += sectionsHtml;
 
         var suggestions = tg.generateSongElements(songWeights, 2);
@@ -508,7 +513,11 @@ function saveProgNames() {
                 tgState.allChords[idx] = chords;
                 if (tgState.scaleChords) {
                     $('#tg-output .tg-scale-chords').replaceWith(
-                        renderScaleChordsMarkup(tgState.scaleChords, collectBorrowedChords(tgState.allChords))
+                        renderScaleChordsMarkup(
+                            tgState.scaleChords,
+                            collectBorrowedChords(tgState.allChords),
+                            tgState.keyObj.key + ' ' + getParallelMode(tgState.keyObj.mode)
+                        )
                     );
                 }
             }
@@ -552,26 +561,36 @@ function saveProgNames() {
             var chords = chordsList[i] || [];
             for (var j = 0; j < chords.length; j++) {
                 var chord = chords[j];
-                if (chord.borrowed && !seen[chord.chord]) {
-                    seen[chord.chord] = true;
-                    borrowed.push(chord.chord);
+                var key = chord.chord + '|' + chord.roman;
+                if (chord.borrowed && !seen[key]) {
+                    seen[key] = true;
+                    borrowed.push({ chord: chord.chord, roman: chord.roman });
                 }
             }
         }
         return borrowed;
     }
 
-    function renderScaleChordsMarkup(scaleChords, borrowedChords) {
+    function renderScaleChordsMarkup(scaleChords, borrowedChords, borrowedFrom) {
         var chordLinks = scaleChords.map(function(chord){
-            return '<span class="tg-chord-wrap"><a href="#" class="tg-chord-link" data-chord="' + chord + '">' + chord + '</a></span>';
+            return '<span class="tg-chord-wrap"><a href="#" class="tg-chord-link" data-chord="' + chord.chord + '">' + chord.chord + '</a> <span class="tg-roman">(' + chord.roman + ')</span></span>';
         });
         var borrowedMarkup = '';
         if (borrowedChords && borrowedChords.length) {
             var borrowedLinks = borrowedChords.map(function(chord){
-                return '<span class="tg-chord-wrap tg-chord-borrowed"><a href="#" class="tg-chord-link" data-chord="' + chord + '">' + chord + '</a> <span class="tg-borrowed">(borrowed)</span></span>';
+                return '<span class="tg-chord-wrap tg-chord-borrowed"><a href="#" class="tg-chord-link" data-chord="' + chord.chord + '">' + chord.chord + '</a> <span class="tg-roman">(' + chord.roman + ')</span> <span class="tg-borrowed">(borrowed)</span></span>';
             });
-            borrowedMarkup = ' <span class="tg-borrowed-list"><strong>Borrowed:</strong> ' + borrowedLinks.join(' ') + '</span>';
+            var borrowedLabel = borrowedFrom ? 'Borrowed (from ' + borrowedFrom + '):' : 'Borrowed:';
+            borrowedMarkup = '<div class="tg-borrowed-list"><strong>' + borrowedLabel + '</strong> ' + borrowedLinks.join(' ') + '</div>';
         }
         return '<div class="tg-scale-chords"><strong>Scale Chords:</strong> ' + chordLinks.join(' - ') + borrowedMarkup + '</div>';
+    }
+
+    function getParallelMode(mode) {
+        var parallelMap = {
+            'Major': 'Natural Minor',
+            'Natural Minor': 'Major'
+        };
+        return parallelMap[mode] || mode;
     }
 })(jQuery);

@@ -177,10 +177,26 @@
             }
             var borrowProb = flavorWeights ? (flavorWeights['borrowed'] || 0) / weightLevels[6] : 0;
             var tritoneProb = flavorWeights ? (flavorWeights['tritone'] || 0) / weightLevels[6] : 0;
-            var parallel = (keyObj.mode === 'Natural Minor') ? 'Major' : 'Natural Minor';
+            var parallelMap = {
+                'Major': 'Natural Minor',
+                'Natural Minor': 'Major'
+            };
+            var parallel = parallelMap[keyObj.mode] || keyObj.mode;
             var parScale = this.buildScale(keyObj.key, parallel);
             var parQual = this.degreeQualities[parallel] || qualities;
             var notesArray = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+            var borrowIndex = -1;
+            if (borrowProb > 0 && Math.random() < borrowProb) {
+                var eligible = [];
+                for (var b = 0; b < degrees.length; b++) {
+                    if (degrees[b] !== 1 && degrees[b] !== 5) {
+                        eligible.push(b);
+                    }
+                }
+                if (eligible.length) {
+                    borrowIndex = eligible[randomInt(0, eligible.length - 1)];
+                }
+            }
             for(var i=0;i<degrees.length;i++) {
                 var deg = degrees[i]-1;
                 var mods = [];
@@ -188,9 +204,11 @@
                 if (chosen) { mods.push(chosen); }
                 var note = scale[deg];
                 var qual = qualities[deg];
-                if (Math.random() < borrowProb) {
+                var borrowed = false;
+                if (i === borrowIndex) {
                     note = parScale[deg];
                     qual = parQual[deg];
+                    borrowed = true;
                 }
                 if (Math.random() < tritoneProb) {
                     var idx = notesArray.indexOf(note);
@@ -198,7 +216,7 @@
                 }
                 var chord = this.renderChord(note, qual, mods);
                 var roman = this.romanNumeral(degrees[i], qual);
-                chords.push({ chord: chord, roman: roman });
+                chords.push({ chord: chord, roman: roman, borrowed: borrowed });
             }
             return chords;
         }
@@ -409,7 +427,13 @@ function saveProgNames() {
             flavorWeights: flavorWeights,
             progNames: progNames
         };
+        var scaleNotes = tg.buildScale(keyObj.key, keyObj.mode);
+        var scaleQualities = tg.degreeQualities[keyObj.mode] || tg.degreeQualities['Major'];
+        var scaleChords = scaleNotes.map(function(note, idx){
+            return tg.renderChord(note, scaleQualities[idx], []);
+        });
         var result = '<div id="tg-output-summary"><strong>' + keyObj.text + '</strong> - ' + bpm + ' BPM</div>';
+        result += '<div class="tg-scale-chords"><strong>Scale Chords:</strong> ' + scaleChords.join(' - ') + '</div>';
         var allChords = [];
         for (var p = 0; p < progNames.length; p++) {
             var progDegrees = tg.generateProgression(progType, progLength);
@@ -421,7 +445,9 @@ function saveProgNames() {
                 '</h4>';
             result += '<p class="tg-degrees"><strong>Degrees:</strong> ' + progDegrees.join(' - ') + '</p>';
             var chordLinks = chords.map(function(c){
-                return '<span class="tg-chord-wrap"><a href="#" class="tg-chord-link" data-chord="' + c.chord + '">' + c.chord + '</a> <span class="tg-roman">(' + c.roman + ')</span></span>';
+                var borrowedLabel = c.borrowed ? ' <span class="tg-borrowed">(borrowed)</span>' : '';
+                var borrowedClass = c.borrowed ? ' tg-chord-borrowed' : '';
+                return '<span class="tg-chord-wrap' + borrowedClass + '"><a href="#" class="tg-chord-link" data-chord="' + c.chord + '">' + c.chord + '</a> <span class="tg-roman">(' + c.roman + ')</span>' + borrowedLabel + '</span>';
             });
             result += '<p class="tg-chords"><em>Chords:</em> ' + chordLinks.join(' ') + '</p>';
             result += '<div class="tg-slots-group"></div>';
@@ -457,7 +483,9 @@ function saveProgNames() {
             var $section = $('#tg-output .tg-prog-result').eq(idx);
             $section.find('.tg-degrees').html('<strong>Degrees:</strong> ' + progDegrees.join(' - '));
             var chordLinks = chords.map(function(c){
-                return '<span class="tg-chord-wrap"><a href="#" class="tg-chord-link" data-chord="' + c.chord + '">' + c.chord + '</a> <span class="tg-roman">(' + c.roman + ')</span></span>';
+                var borrowedLabel = c.borrowed ? ' <span class="tg-borrowed">(borrowed)</span>' : '';
+                var borrowedClass = c.borrowed ? ' tg-chord-borrowed' : '';
+                return '<span class="tg-chord-wrap' + borrowedClass + '"><a href="#" class="tg-chord-link" data-chord="' + c.chord + '">' + c.chord + '</a> <span class="tg-roman">(' + c.roman + ')</span>' + borrowedLabel + '</span>';
             });
             $section.find('.tg-chords').html('<em>Chords:</em> ' + chordLinks.join(' '));
             var $group = $section.find('.tg-slots-group').empty();
